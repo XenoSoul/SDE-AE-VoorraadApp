@@ -1,0 +1,110 @@
+﻿.form {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.filiaalSelector {
+    text-align: left;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+input[type="text"] {
+    text-align: center;
+}
+
+input[type="password"] {
+    text-align: center;
+}
+
+#LoginFields {
+    border-radius: 7px;
+    border: 3px solid #0C9544;
+    padding: 5px;
+    width: 300px;
+    height: 40px;
+}
+
+#textFieldTitels {
+    color: #0c9544;
+    font-size: 30px;
+}
+
+#checkBoxTitel {
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    color: #0c9544;
+    font-size: 30px;
+}
+
+#centeredSubmit {
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+input[type=submit] {
+    border-radius: 7px;
+    border: none;
+    background-color: #0c9544;
+    color: black;
+    padding: 5px;
+    font-weight: 700;
+    width: 150px;
+    height: 40px;
+}
+
+.homeImage {
+    position: absolute;
+    top: 225px;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.Home {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.LogUit {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.Terug {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.button {
+    border-radius: 7px;
+    border: none;
+    background-color: #0c9544;
+    color: black;
+    padding: 5px;
+    font-weight: 700;
+    width: 420px;
+    height: 80px;
+    font-size: 40px;
+}

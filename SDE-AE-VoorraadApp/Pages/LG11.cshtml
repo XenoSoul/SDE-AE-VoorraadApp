@@ -1,0 +1,45 @@
+﻿@page
+@model LG11Model
+@{
+    ViewData["Title"] = "Filiaal Selecteren";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/user.css" />
+}
+
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+    <div class="Home">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Index"><img src="~/Home.png" alt="Home" style="width:155px;height:42px;"></a>
+    </div>
+
+    <div class="LogUit">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" style="width:142px;height:42px;"></a>
+    </div>
+
+    <div class="Terug">
+        <a class="nav-link text-dark" onclick="history.go(-1)"><img src="~/Terug.png" alt="Terug" style="width:106px;height:42px;"></a>
+    </div>
+
+    <div class="homeImage">
+        <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" style="width:669px;height:336px;">
+    </div>
+    
+    <div class="filiaalSelector">
+        <form method="POST" asp-page="Login">
+            <label for="filialen" id="checkBoxTitel" style="object-position: right"><b>Filialen:</b></label><br>
+            <input type="checkbox" value="false"> Alles<br><br>
+            <input type="checkbox" value="false"> Beuningen<br>
+            <input type="checkbox" value="false"> Ede<br>
+            <input type="checkbox" value="false"> Nijmegen<br>
+            <input type="checkbox" value="false"> Veenendaal<br>
+            <input type="checkbox" value="false"> Wijchen<br><br><br>
+            <input type="submit" id="centeredSubmit" asp-page-handler="PLACEHOLDER" value="Genereer lijst">
+        </form>
+    </div>
+</body>

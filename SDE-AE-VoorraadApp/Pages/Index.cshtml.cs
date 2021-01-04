@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SDE_AE_VoorraadApp.Pages
+namespace SDE___Appeltje_Eitje_Automaten___POC_2.Pages
 {
     public class IndexModel : PageModel
     {

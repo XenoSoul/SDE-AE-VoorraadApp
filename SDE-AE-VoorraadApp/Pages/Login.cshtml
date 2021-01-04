@@ -1,0 +1,28 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/user.css"/>
+}
+
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+    <div class="form">
+        <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" style="width: 669px; height: 336px;"><br><br>
+
+        <form method="POST" asp-page="Login">
+            <label for="username" id="textFieldTitels"><b>Gebruikersnaam:</b></label><br>
+            <input type="text" id="LoginFields" name="username" placeholder="Vul uw gebruikersnaam in..."><br><br>
+            <label for="password" id="textFieldTitels"><b>Wachtwoord:</b></label><br>
+            <input type="password" id="LoginFields" name="password" placeholder="Vul uw wachtwoord in..."><br><br><br><br>
+            <input type="submit" asp-page-handler="Index" value="Inloggen">
+        </form>
+    </div>
+</body>
