@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using SDE_AE_VoorraadApp.Data;
 
 namespace SDE_AE_VoorraadApp
 {
@@ -28,7 +29,9 @@ namespace SDE_AE_VoorraadApp
                 var services = scope.ServiceProvider;
                 try
                 {
-                    // DbInitializer.Initialize(context);
+                    var context = services.GetRequiredService<LocationContext>();
+                    //context.Database.EnsureCreated();
+                    DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
