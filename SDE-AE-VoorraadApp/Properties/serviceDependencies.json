@@ -1,9 +1,5 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "OrderContext"
-    },
     "mssql2": {
       "type": "mssql",
       "connectionId": "LocationContext"
