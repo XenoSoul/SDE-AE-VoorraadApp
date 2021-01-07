@@ -30,7 +30,7 @@ namespace SDE_AE_VoorraadApp
                 try
                 {
                     var context = services.GetRequiredService<LocationContext>();
-                    //context.Database.EnsureCreated();
+                    // context.Database.EnsureCreated();
                     DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)

@@ -27,8 +27,6 @@ namespace SDE_AE_VoorraadApp
         {
             services.AddRazorPages();
 
-            
-
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDbContext<LocationContext>(options =>
