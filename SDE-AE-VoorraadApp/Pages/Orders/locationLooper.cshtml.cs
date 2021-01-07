@@ -9,11 +9,11 @@ using SDE_AE_VoorraadApp.Models;
 
 namespace SDE_AE_VoorraadApp.Data
 {
-    public class IndexModel : PageModel
+    public class LocationLooperModel : PageModel
     {
         private readonly SDE_AE_VoorraadApp.Data.LocationContext _context;
 
-        public IndexModel(SDE_AE_VoorraadApp.Data.LocationContext context)
+        public LocationLooperModel(SDE_AE_VoorraadApp.Data.LocationContext context)
         {
             _context = context;
         }

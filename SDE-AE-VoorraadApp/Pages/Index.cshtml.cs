@@ -21,5 +21,24 @@ namespace SDE___Appeltje_Eitje_Automaten___POC_2.Pages
         {
 
         }
+        public IActionResult OnPostLG11()
+        {
+            return RedirectToPage("LG11");
+        }
+
+        public IActionResult OnPostAR11()
+        {
+            return RedirectToPage("AR11");
+        }
+
+        public IActionResult OnPostAB11()
+        {
+            return RedirectToPage("AB11");
+        }
+
+        public IActionResult OnPostCF11()
+        {
+            return RedirectToPage("CF11");
+        }
     }
 }

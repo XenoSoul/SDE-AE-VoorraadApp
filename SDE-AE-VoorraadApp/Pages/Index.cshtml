@@ -5,7 +5,8 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/user.css" />
+    <link rel="stylesheet" href="~/css/desktop.css" />
+    <link rel="stylesheet" href="~/css/mobile.css" />
 }
 
 <!DOCTYPE html>
@@ -14,18 +15,32 @@
 </head>
 
 <body>
-    <div class="LogUit">
-        <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" style="width:142px;height:42px;"></a>
-    </div>
-    
-    <div class="homeImage">
-        <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" style="width:669px;height:336px;">
+    <div>
+        <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
     </div>
 
-    <div style="text-align: center; position: absolute; top: 50%; left: 50%; -moz-transform: translateX(-50%) translateY(-50%); -webkit-transform: translateX(-50%) translateY(-50%); transform: translateX(-50%) translateY(-50%);">
-        <a asp-page="/LG11"><button type="button" class="button">Lijst Genereren</button></a><br><br><br><br>
-        <button type="button" class="button">Archief</button><br><br><br><br>
-        <button type="button" class="button">Accounts Beheren</button><br><br><br><br>
-        <button type="button" class="button">Couriers & Filialen</button>
+    <div>
+        <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
     </div>
+
+    <!-- KNOP 1: Lijst Genereren -->
+    <form method="POST" asp-page="Index">
+        <input type="submit" asp-page-handler="LG11" value="Lijst Genereren" class="hp-Button-Inherit hp-Button1">
+    </form>
+
+    <!-- KNOP 2: Archief -->
+    <form method="POST" asp-page="Index">
+        <input type="submit" asp-page-handler="AR11" value="Archief" class="hp-Button-Inherit hp-Button2">
+    </form>
+
+    <!-- KNOP 3: Accounts Beheren -->
+    <form method="POST" asp-page="Index">
+        <input type="submit" asp-page-handler="AB11" value="Accounts Beheren" class="hp-Button-Inherit hp-Button3">
+    </form>
+
+    <!-- KNOP 4: Couriers & Filialen -->
+    <form method="POST" asp-page="Index">
+        <input type="submit" asp-page-handler="CF11" value="Couriers & Filialen" class="hp-Button-Inherit hp-Button4">
+    </form>
+
 </body>

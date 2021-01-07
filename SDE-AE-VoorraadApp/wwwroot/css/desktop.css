@@ -1,0 +1,191 @@
+﻿@media only screen and (min-width: 601px) {
+    body {
+        margin: 0;
+    }
+    
+    /*#####################################################################################################*/
+    /* CLASS TYPE */
+    /*#####################################################################################################*/
+
+    /*---------------------------*/
+    /* Standard Objects */
+    /*---------------------------*/
+    .aeLogo {
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 17%;
+        left: 50%;
+        width: auto;
+        height: 20%;
+        min-height: 75px;
+        z-index: 0;
+    }
+
+    .home {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1;
+        width: auto;
+        height: 5%;
+    }
+
+    .logOut {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+        width: auto;
+        height: 5%;
+    }
+
+    .back {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        z-index: 1;
+        width: auto;
+        height: 5%;
+    }
+
+    /*---------------------------*/
+    /* Home Page Buttons */
+    /*---------------------------*/
+
+    .hp-Button-Inherit {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        font-size: 3.2vh;
+        max-width: 600px;
+        min-height: 40px;
+        min-width: 300px;
+        width: 20vw;
+        height: 8vh;
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+
+    .hp-Button1 {
+        top: 35%;
+        left: 50%;
+    }
+
+    .hp-Button2 {
+        top: 50%;
+        left: 50%;
+    }
+
+    .hp-Button3 {
+        top: 65%;
+        left: 50%;
+    }
+
+    .hp-Button4 {
+        top: 80%;
+        left: 50%;
+    }
+
+    /*---------------------------*/
+    /* Misc */
+    /*---------------------------*/
+
+    .form {
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50%;
+        left: 50%;
+    }
+
+    .filiaalSelector {
+        text-align: left;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50%;
+        left: 50%;
+    }
+
+    .logIn {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        width: 150px;
+        height: 40px;
+    }
+
+    .generateList {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        width: 150px;
+        height: 40px;
+    }
+
+    .placeholderTitel {
+        text-align: center;
+        color: #0c9544;
+        font-size: 50px;
+        font-weight: 700;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50%;
+        left: 50%;
+    }
+
+    /*#####################################################################################################*/
+    /* INPUT TYPE */
+    /*#####################################################################################################*/
+
+    input[type="text"] {
+        text-align: center;
+    }
+
+    input[type="password"] {
+        text-align: center;
+    }
+
+    /*#####################################################################################################*/
+    /* ID TYPE */
+    /*#####################################################################################################*/
+
+    #loginField {
+        border-radius: 7px;
+        border: 4px solid #0C9544;
+        width: 300px;
+        height: 40px;
+    }
+
+    #textFieldTitel {
+        color: #0c9544;
+        font-size: 30px;
+        margin-bottom: -1vh;
+    }
+
+    #checkBoxTitel {
+        color: #0c9544;
+        font-size: 30px;
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        left: 50%;
+    }
+} 
