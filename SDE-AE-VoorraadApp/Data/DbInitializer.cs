@@ -18,22 +18,28 @@ namespace SDE_AE_VoorraadApp.Data
             if (context.Locations.Any())
                 return;
 
-            var locations = JsonSerializer.Deserialize<List<Location>>(ApiRequester("Machines", "").Content) ?? throw new InvalidOperationException();
+            var locations = JsonSerializer.Deserialize<List<Location>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
             locations = UniqueLocationsFilter(locations);
             context.Locations.AddRange(locations);
             context.SaveChanges();
 
+            var categories = JsonSerializer.Deserialize<List<Category>>(ApiRequester("products", "categories").Content) ?? throw new InvalidOperationException();
+            context.Categories.AddRange(categories);
+            context.SaveChanges();
 
-            var machines = JsonSerializer.Deserialize<List<_Machine>>(ApiRequester("Machines", "").Content) ?? throw new InvalidOperationException();
+            var products = JsonSerializer.Deserialize<List<Product>>(ApiRequester("products", "").Content) ?? throw new InvalidOperationException();
+            context.Products.AddRange(DbProductCatagoryLinker(products, context.Categories.ToList()));
+            context.SaveChanges();
+
+            var machines = JsonSerializer.Deserialize<List<_Machine>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
             context.Machines.AddRange(DbMachineLocationLinker(machines, context.Locations.ToList()));
             context.SaveChanges();
 
-
-            // TODO: Create API in order to fill the ProductStock table with data
-            var productStocks = new ProductStock[]
-            {
-
-            };
+            var allMachineIds = context.Machines.Select(m => m.MachineId).ToArray();
+            var _productStocks = allMachineIds.Select(machineId => JsonSerializer.Deserialize<_ProductStock>(ApiRequester("machines/stock", $"{machineId}").Content) ?? throw new InvalidOperationException()).ToList();
+            var productStocks = DbProductStockMachineProductLinker(_productStocks, context.Products.ToList(), context.Machines.ToList());
+            context.ProductStocks.AddRange(productStocks);
+            context.SaveChanges();
 
             // TODO: Create API in order to fill the OrderList table with data
             var orderLists = new OrderList[]
@@ -75,12 +81,39 @@ namespace SDE_AE_VoorraadApp.Data
             foreach (var machine in machines.ToList())
             {
                 machine.LocationID = locations.Find(x => x.Place == machine.Place).ID;
-                var realMachine = new Machine{ID = 0, LocationID = machine.LocationID, MachineID = machine.MachineID, Name = machine.Name};
+                var realMachine = new Machine{ID = 0, LocationID = machine.LocationID, MachineId = machine.MachineID, Name = machine.Name};
                 legitMachines.Add(realMachine);
             }
 
             return legitMachines;
         }
+
+        private static List<Product> DbProductCatagoryLinker(List<Product> products, List<Category> categories)
+        {
+            foreach (var product in products.ToList())
+            {
+                product.CategoryId = categories.Find(x => x.CategoryID == product.CategoryId).ID;
+            }
+
+            return products;
+        }
+
+        private static List<ProductStock> DbProductStockMachineProductLinker(List<_ProductStock> productStocks, List<Product> products, List<Machine> machines)
+        {
+            return (from productStock in productStocks.ToList()
+                from _productStock in productStock.ProductStock
+                select new ProductStock
+                {
+                    ID = 0,
+                    ProductId = products.Find(p => p.ProductId == _productStock.ProductId).ID,
+                    MachineId = machines.Find(x => x.MachineId == productStock.MachineId).ID,
+                    AvailableCount = _productStock.AvailableCount,
+                    MinCount = _productStock.MinCount,
+                    MaxCount = _productStock.MaxCount,
+                    RefillAdviceCount = _productStock.RefillAdviceCount
+                }).ToList();
+        }
+
 
         private static IRestResponse ApiRequester(string header, string subheader)
         {
@@ -104,6 +137,13 @@ namespace SDE_AE_VoorraadApp.Data
             public string Place { get; set; }
             public float Latitude { get; set; }
             public float Longitude { get; set; }
+        }
+
+        private class _ProductStock
+        {
+            public int MachineId { get; set; }
+            public ProductStock[] ProductStock { get; set; }
+           
         }
     }
 }
