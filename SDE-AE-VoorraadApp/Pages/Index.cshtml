@@ -1,10 +1,46 @@
 ﻿@page
-@model IndexModel
+@model SDE_AE_VoorraadApp.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/desktop.css" />
+    <link rel="stylesheet" href="~/css/mobile.css" />
+}
+
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+<div>
+    <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
 </div>
+
+<div>
+    <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
+</div>
+
+<!-- KNOP 1: Lijst Genereren -->
+<form method="POST" asp-page="Index">
+    <input type="submit" asp-page-handler="LG1" value="Lijst Genereren" class="hp-Button-Inherit hp-Button1">
+</form>
+
+<!-- KNOP 2: Archief -->
+<form method="POST" asp-page="Index">
+    <input type="submit" asp-page-handler="AR1" value="Archief" class="hp-Button-Inherit hp-Button2">
+</form>
+
+<!-- KNOP 3: Accounts Beheren -->
+<form method="POST" asp-page="Index">
+    <input type="submit" asp-page-handler="AB1" value="Accounts Beheren" class="hp-Button-Inherit hp-Button3">
+</form>
+
+<!-- KNOP 4: Couriers & Filialen -->
+<form method="POST" asp-page="Index">
+    <input type="submit" asp-page-handler="CF1" value="Couriers & Filialen" class="hp-Button-Inherit hp-Button4">
+</form>
+
+</body>

@@ -1,0 +1,288 @@
+﻿@media only screen and (max-width: 600px) {
+    body {
+        margin: 0;
+    }
+
+    /*#####################################################################################################*/
+    /* CLASS TYPE */
+    /*#####################################################################################################*/
+
+    /*---------------------------*/
+    /* Standard Objects */
+    /*---------------------------*/
+    .aeLogo {
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 17%;
+        left: 50%;
+        width: auto;
+        height: 20%;
+        min-height: 75px;
+        z-index: 0;
+    }
+
+    .home {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1;
+        width: auto;
+        height: 3.5%;
+    }
+
+    .logOut {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+        width: auto;
+        height: 3.5%;
+    }
+
+    .back {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        z-index: 1;
+        width: auto;
+        height: 3.5%;
+    }
+
+    /*---------------------------*/
+    /* Home Page Buttons */
+    /*---------------------------*/
+
+    .hp-Button-Inherit {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        font-size: 2.3vh;
+        max-width: 600px;
+        /*empty line to keep it even with desktop.css*/
+        min-height: 40px;
+        width: 60vw;
+        height: 8vh;
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+
+    .hp-Button1 {
+        top: 35%;
+        left: 50%;
+    }
+
+    .hp-Button2 {
+        top: 50%;
+        left: 50%;
+    }
+
+    .hp-Button3 {
+        top: 65%;
+        left: 50%;
+    }
+
+    .hp-Button4 {
+        top: 80%;
+        left: 50%;
+    }
+
+    /*---------------------------*/
+    /* Login Page */
+    /*---------------------------*/
+
+    .form {
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50vh;
+        left: 50vw;
+        height: 25.185vh;
+        width: 15.625vw;
+    }
+
+    .logIn {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        width: 150px;
+        height: 40px;
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        left: 50%;
+        margin-top: 15px;
+    }
+
+    /*---------------------------*/
+    /* LG1 */
+    /*---------------------------*/
+
+    .filiaalSelector {
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50vh;
+        left: 50vw;
+        height: 25.926vh;
+        width: 100vw;
+    }
+    
+    .checkboxCenter {
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        left: 50%;
+    }
+
+    .generateList {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        width: 150px;
+        height: 40px;
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        left: 50%;
+        margin-top: 15px;
+    }
+
+    /*---------------------------*/
+    /* LG1_1 */
+    /*---------------------------*/
+
+    .listBorder {
+        left: 50%;
+        top: 62.5%;
+        width: 70vw;
+        height: 55vh;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        border-radius: 20px;
+        border: 5px solid #0C9544;
+    }
+
+    .saveList {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        width: 150px;
+        height: 40px;
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        left: 50%;
+        top: 93%;
+    }
+
+    .file {
+        width: auto;
+        height: 3.5vh;
+        position: absolute;
+        margin-top: 0.5%;
+    }
+
+    .fileName {
+        font-size: 3vh;
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        left: 50%;
+        top: 30%;
+        width: 50vw;
+        height: 2.5vw;
+    }
+
+    /*---------------------------*/
+    /* Misc */
+    /*---------------------------*/
+    
+    .placeholderTitel {
+        text-align: center;
+        color: #0c9544;
+        font-size: 20px;
+        font-weight: 700;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50%;
+        left: 50%;
+    }
+
+    /*#####################################################################################################*/
+    /* INPUT TYPE */
+    /*#####################################################################################################*/
+
+    input[type="text"] {
+        text-align: center;
+    }
+
+    input[type="password"] {
+        text-align: center;
+    }
+
+    /*#####################################################################################################*/
+    /* ID TYPE */
+    /*#####################################################################################################*/
+
+    #loginField {
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        border-radius: 7px;
+        border: 4px solid #0C9544;
+        width: 275px;
+        height: 40px;
+        margin-top: 15px;
+    }
+
+    #textFieldTitel {
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        color: #0c9544;
+        font-size: 30px;
+    }
+
+    #checkBoxTitel {
+        color: #0c9544;
+        font-size: 30px;
+        text-align: center;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        left: 50%;
+    }
+}
