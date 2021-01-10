@@ -1,18 +1,16 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SDE_AE_VoorraadApp.Models;
 
-namespace SDE___Appeltje_Eitje_Automaten___POC_2.Pages
+namespace SDE_AE_VoorraadApp.Pages
 {
-    public class LG11Model : PageModel
+    public class LG1Model : PageModel
     {
         private readonly SDE_AE_VoorraadApp.Data.LocationContext _context;
-        public LG11Model(SDE_AE_VoorraadApp.Data.LocationContext context)
+        public LG1Model(SDE_AE_VoorraadApp.Data.LocationContext context)
         {
             _context = context;
         }
@@ -23,7 +21,10 @@ namespace SDE___Appeltje_Eitje_Automaten___POC_2.Pages
         {
             Location = await _context.Locations.ToListAsync();
         }
+
+        public IActionResult OnPostLG1_1()
+        {
+            return RedirectToPage("LG1_1");
+        }
     }
 }
-
-

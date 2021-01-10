@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace SDE___Appeltje_Eitje_Automaten___POC_2.Pages
+namespace SDE_AE_VoorraadApp.Pages
 {
     public class IndexModel : PageModel
     {
@@ -21,24 +17,24 @@ namespace SDE___Appeltje_Eitje_Automaten___POC_2.Pages
         {
 
         }
-        public IActionResult OnPostLG11()
+        public IActionResult OnPostLG1()
         {
-            return RedirectToPage("LG11");
+            return RedirectToPage("LG1");
         }
 
-        public IActionResult OnPostAR11()
+        public IActionResult OnPostAR1()
         {
-            return RedirectToPage("AR11");
+            return RedirectToPage("AR1");
         }
 
-        public IActionResult OnPostAB11()
+        public IActionResult OnPostAB1()
         {
-            return RedirectToPage("AB11");
+            return RedirectToPage("AB1");
         }
 
-        public IActionResult OnPostCF11()
+        public IActionResult OnPostCF1()
         {
-            return RedirectToPage("CF11");
+            return RedirectToPage("CF1");
         }
     }
 }

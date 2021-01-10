@@ -1,0 +1,36 @@
+﻿@page
+@model SDE_AE_VoorraadApp.Pages.AB1Model
+@{
+    ViewData["Title"] = "Accounts Beheren";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/desktop.css" />
+    <link rel="stylesheet" href="~/css/mobile.css" />
+}
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+<div>
+    <a class="nav-link text-dark" asp-area="" asp-page="/Index"><img src="~/Home.png" alt="Home" class="home"></a>
+</div>
+
+<div>
+    <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
+</div>
+
+<div>
+    <a class="nav-link text-dark" onclick="history.go(-1)"><img src="~/Terug.png" alt="Terug" class="back"></a>
+</div>
+
+<div>
+    <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
+</div>
+
+<div class="placeholderTitel">
+    Buiten MVP:<br>Accounts Beheren
+</div>
+</body>
