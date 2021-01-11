@@ -20,7 +20,7 @@ namespace SDE_AE_VoorraadApp.Data
 
             var locations = JsonSerializer.Deserialize<List<Location>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
             locations = UniqueLocationsFilter(locations);
-            context.Locations.AddRange(locations);
+            context.Locations.AddRange(locations.OrderBy(l => l.City));
             context.SaveChanges();
 
             var categories = JsonSerializer.Deserialize<List<Category>>(ApiRequester("products", "categories").Content) ?? throw new InvalidOperationException();
@@ -37,7 +37,7 @@ namespace SDE_AE_VoorraadApp.Data
 
             var allMachineIds = context.Machines.Select(m => m.MachineId).ToArray();
             var _productStocks = allMachineIds.Select(machineId => JsonSerializer.Deserialize<_ProductStock>(ApiRequester("machines/stock", $"{machineId}").Content) ?? throw new InvalidOperationException()).ToList();
-            var productStocks = DbProductStockMachineProductLinker(_productStocks, context.Products.ToList(), context.Machines.ToList());
+            var productStocks = DbProductStockMachineProductLinker(_productStocks, context);
             context.ProductStocks.AddRange(productStocks);
             context.SaveChanges();
 
@@ -98,15 +98,15 @@ namespace SDE_AE_VoorraadApp.Data
             return products;
         }
 
-        private static List<ProductStock> DbProductStockMachineProductLinker(List<_ProductStock> productStocks, List<Product> products, List<Machine> machines)
+        private static List<ProductStock> DbProductStockMachineProductLinker(List<_ProductStock> productStocks, LocationContext context)
         {
             return (from productStock in productStocks.ToList()
                 from _productStock in productStock.ProductStock
                 select new ProductStock
                 {
                     ID = 0,
-                    ProductId = products.Find(p => p.ProductId == _productStock.ProductId).ID,
-                    MachineId = machines.Find(x => x.MachineId == productStock.MachineId).ID,
+                    ProductId = context.Products.ToList().Find(p => p.ProductId == _productStock.ProductId).ID,
+                    MachineId = context.Machines.ToList().Find(x => x.MachineId == productStock.MachineId).ID,
                     AvailableCount = _productStock.AvailableCount,
                     MinCount = _productStock.MinCount,
                     MaxCount = _productStock.MaxCount,
@@ -139,10 +139,10 @@ namespace SDE_AE_VoorraadApp.Data
             public float Longitude { get; set; }
         }
 
-        private class _ProductStock
+        public class _ProductStock
         {
             public int MachineId { get; set; }
-            public ProductStock[] ProductStock { get; set; }
+            public List<ProductStock> ProductStock { get; set; }
            
         }
     }
