@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "AE-VoorraadApp-Test": {
+      "commandName": "Project",
+      "sqlDebugging": true,
+      "nativeDebugging": true
+    }
+  }
+}

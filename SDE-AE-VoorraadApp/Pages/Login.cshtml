@@ -1,0 +1,31 @@
+﻿@page
+@model SDE_AE_VoorraadApp.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/desktop.css" />
+    <link rel="stylesheet" href="~/css/mobile.css" />
+}
+
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+<div>
+    <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo"><br><br>
+</div>
+
+<div class="form">
+    <form method="POST" asp-page="Login">
+        <label for="username" id="textFieldTitel"><b>Gebruikersnaam:</b></label><br>
+        <input type="text" id="loginField" name="username" placeholder="Vul uw gebruikersnaam in..."><br><br><br>
+        <label for="password" id="textFieldTitel"><b>Wachtwoord:</b></label><br>
+        <input type="password" id="loginField" name="password" placeholder="Vul uw wachtwoord in..."><br><br><br>
+        <input type="submit" asp-page-handler="Index" value="Inloggen" class="logIn">
+    </form>
+</div>
+</body>

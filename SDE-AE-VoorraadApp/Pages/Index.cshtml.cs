@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SDE_AE_VoorraadApp.Pages
 {
@@ -20,6 +16,25 @@ namespace SDE_AE_VoorraadApp.Pages
         public void OnGet()
         {
 
+        }
+        public IActionResult OnPostLG1()
+        {
+            return RedirectToPage("LG1");
+        }
+
+        public IActionResult OnPostAR1()
+        {
+            return RedirectToPage("AR1");
+        }
+
+        public IActionResult OnPostAB1()
+        {
+            return RedirectToPage("AB1");
+        }
+
+        public IActionResult OnPostCF1()
+        {
+            return RedirectToPage("CF1");
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SDE_AE_VoorraadApp.Models;
 
-namespace SDE_AE_VoorraadApp.Data
+namespace SDE_AE_VoorraadApp.Pages
 {
-    public class IndexModel : PageModel
+    public class LG1Model : PageModel
     {
         private readonly SDE_AE_VoorraadApp.Data.LocationContext _context;
 
-        public IndexModel(SDE_AE_VoorraadApp.Data.LocationContext context, ILogger<IndexModel> logger)
+        public LG1Model(SDE_AE_VoorraadApp.Data.LocationContext context)
         {
             _context = context;
         }
@@ -29,6 +27,11 @@ namespace SDE_AE_VoorraadApp.Data
                 Console.WriteLine($"{result} lines were updated!!!");
             }
             Location = await _context.Locations.ToListAsync();
+        }
+
+        public IActionResult OnPostLG1_1()
+        {
+            return RedirectToPage("LG1_1");
         }
     }
 }

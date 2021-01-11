@@ -1,0 +1,50 @@
+﻿@page
+@model SDE_AE_VoorraadApp.Pages.LG1_1Model
+@{
+    ViewData["Title"] = "Filiaal Selecteren";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/desktop.css" />
+    <link rel="stylesheet" href="~/css/mobile.css" />
+}
+
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+<div>
+    <a class="nav-link text-dark" asp-area="" asp-page="/Index"><img src="~/Home.png" alt="Home" class="home"></a>
+</div>
+
+<div>
+    <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
+</div>
+
+<div>
+    <a class="nav-link text-dark" onclick="history.go(-1)"><img src="~/Terug.png" alt="Terug" class="back"></a>
+</div>
+
+<div>
+    <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
+</div>
+
+<div>
+    <div class="fileName">
+        <div style="display: inline-block">
+            Filename <!-- Dit moet de string worden met de filename --> &nbsp;
+            <img src="~/File.png" alt="Bestand" class="file">
+        </div>
+    </div>
+
+    <div class="listBorder">
+        <!-- Hier komt de lijst in te staan -->
+    </div>
+
+    <form method="POST" asp-page="LG1_1">
+        <input type="submit" asp-page-handler="Index" value="Lijst Opslaan" class="saveList">
+    </form>
+</div>
+</body>
