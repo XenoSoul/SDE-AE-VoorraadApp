@@ -38,13 +38,13 @@
         <label for="filialen" id="checkBoxTitel"><b>Filialen:</b></label><br>
         <div class="checkboxCenter">
             <div class="checkAll">
-                <input type="checkbox" id="checkAll" value="checkAllBox"> Alles<br><br>
+                <input type="checkbox" value="0"> Alles<br><br>
             </div>
             <div class="checkOthers">
                 @foreach (var item in Model.Location)
                 {
                     <div>
-                        <input type="checkbox" id="@item.ID" value="cities"> @Html.DisplayFor(modelItem => item.City)
+                        <input type="checkbox" name="LocationToPrint" value="@item.ID"> @Html.DisplayFor(modelItem => item.Place) - @Html.DisplayFor(modelItem => item.City)
                     </div>
                 }
             </div>

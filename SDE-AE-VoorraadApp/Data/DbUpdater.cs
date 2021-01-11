@@ -66,7 +66,7 @@ namespace SDE_AE_VoorraadApp.Data
                 oldStonk.Machine = context.Machines.ToList().Find(cm => cm.ID == oldStonk.MachineId);
             }
 
-            foreach (var newStonk in  newStonks)
+            foreach (var newStonk in newStonks)
             {
                 var currentOldStonkIndex = oldStonks.FindIndex(os =>
                     os.ProductId == newStonk.ProductId && os.MachineId == newStonk.MachineId);

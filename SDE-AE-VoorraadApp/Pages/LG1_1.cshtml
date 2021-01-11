@@ -34,13 +34,23 @@
 <div>
     <div class="fileName">
         <div style="display: inline-block">
-            Filename <!-- Dit moet de string worden met de filename --> &nbsp;
+            @Html.DisplayFor(model => model.Orders.Name) &nbsp;
             <img src="~/File.png" alt="Bestand" class="file">
         </div>
     </div>
 
     <div class="listBorder">
-        <!-- Hier komt de lijst in te staan -->
+        @foreach (var item in Model.WTFIsThis)
+        {
+
+        <div>
+            @Html.DisplayFor(modelItem => item.Location.Place)
+            @foreach (var order in item.Orders)
+            {
+                @Html.DisplayFor(modelItem => order.ProductStock.Product.Name) @Html.DisplayFor(modelItem => order.Quantity)
+            }
+        </div>
+        }
     </div>
 
     <form method="POST" asp-page="LG1_1">
