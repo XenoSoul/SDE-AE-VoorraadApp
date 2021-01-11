@@ -37,15 +37,21 @@ namespace SDE_AE_VoorraadApp.Data
             return await context.SaveChangesAsync();
         }
 
-        // TODO: Add functionality to TwonkUpdate
+        // TODO: Improve Upon TwonkUpdate to backup OrderList and Orders
         public static void TwonkUpdate(LocationContext context)
         {
-            if (context.Locations.Any())
-            {
-                DbInitializer.Initialize(context);
-                return;
-            }
+            context.ProductStocks.RemoveRange(context.ProductStocks.ToArray());
+            context.SaveChanges();
+            context.Products.RemoveRange(context.Products.ToArray());
+            context.SaveChanges();
+            context.Categories.RemoveRange(context.Categories.ToArray());
+            context.SaveChanges();
+            context.Machines.RemoveRange(context.Machines.ToArray());
+            context.SaveChanges();
+            context.Locations.RemoveRange(context.Locations.ToArray());
+            context.SaveChanges();
 
+            DbInitializer.Initialize(context);
         }
 
         private static async Task<List<ProductStock>> AsyncDbProductStockMachineProductLinkerRevampSymphonyOfTheNight(List<Task<DbInitializer._ProductStock>> newStoks, LocationContext context)
@@ -62,23 +68,8 @@ namespace SDE_AE_VoorraadApp.Data
 
             foreach (var newStonk in  newStonks)
             {
-
-                // newStonk.MachineId = context.Machines.ToList().Find(m => m.MachineId == newStonk.MachineId).ID;
-
-                // var currentOldStonkSameMachine = oldStonks.FindAll(os => os.MachineId == newStonk.MachineId);
-
-                /*foreach (var newProductStock in newStick.ProductStock)
-                {
-                    newStick.ProductStock.FindIndex(nsps => nsps.ProductId == ne)
-                    newStick.ProductStock[newProductStock.i]
-                }*/
                 var currentOldStonkIndex = oldStonks.FindIndex(os =>
                     os.ProductId == newStonk.ProductId && os.MachineId == newStonk.MachineId);
-
-                    /*currentOldStonkSameMachine.Find(cossm =>
-                            cossm.ProductId == newStonk.ProductStock.Find(nsps => nsps.ProductId == cossm.ProductId)
-                                .ProductId)
-                        .ID;*/
 
                 oldStonks[currentOldStonkIndex].AvailableCount = newStonk.AvailableCount;
                 oldStonks[currentOldStonkIndex].RefillAdviceCount = newStonk.RefillAdviceCount;
