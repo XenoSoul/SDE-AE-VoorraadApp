@@ -11,7 +11,7 @@ namespace SDE_AE_VoorraadApp.Data
     {
         private static int OrderId { get; set; }
 
-        public static async Task<int> CreateList(LocationContext context, IEnumerable<int> locations)
+        public static async Task<int> CreateList(LocationContext context, List<int> locations)
         {
             var locationsList = locations.Select(location => context.Locations.ToList().Find(l => l.ID == location)).ToList();
             var machineList = new List<Machine>();
@@ -34,7 +34,6 @@ namespace SDE_AE_VoorraadApp.Data
             if (productStockList.Count == 0)
                 return productStockList.Count;
 
-            // TODO: Change the name of the document to something more suiting
             await context.OrderLists.AddAsync(new OrderList
             {
                 DateTimeCreated = DateTime.Now,
