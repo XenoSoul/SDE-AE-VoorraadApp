@@ -29,14 +29,16 @@ namespace SDE_AE_VoorraadApp.Pages
             var result = await DbUpdater.TwinkUpdate(_context);
             if (result > 0)
             {
-                // TODO: Update Console.WriteLine to something in ^debug output
+                // TODO: Update Console.WriteLine to something in debug output
                 Console.WriteLine($"{result} lines were updated!!!");
             }
             Location = await _context.Locations.ToListAsync();
         }
 
+        // TODO: Change the redirect to something that indicates to the user that location is already fully stocked
         public async Task<IActionResult> OnPostLG1_1()
         {
+            // TODO: Select all option functionality
             var rad = await ListRequester.CreateList(_context, LocationToPrint);
             return RedirectToPage(rad > 0 ? "LG1_1" : "Index");
         }

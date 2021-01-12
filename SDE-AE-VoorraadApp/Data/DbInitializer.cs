@@ -55,6 +55,7 @@ namespace SDE_AE_VoorraadApp.Data
 
         }
 
+        // TODO: Update UniqueLocationsFilter to work with Lat and Long
         private static List<Location> UniqueLocationsFilter(List<Location> locations)
         {
             var _locations = locations;
