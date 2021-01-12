@@ -35,7 +35,11 @@ namespace SDE_AE_VoorraadApp.Data
                 return productStockList.Count;
 
             // TODO: Change the name of the document to something more suiting
-            await context.OrderLists.AddAsync(new OrderList { DateTimeCreated = DateTime.Now, Name = $"{DateTime.Now:dddd, dd-MM-yyyy_HH:mm:ss}_Filialen-{locations}" });
+            await context.OrderLists.AddAsync(new OrderList
+            {
+                DateTimeCreated = DateTime.Now,
+                Name = $"{DateTime.Now:dddd_dd-MM-yyyy_HH:mm:ss}_Filialen-{string.Join("", locations.ToArray()) }"
+            });
             await context.SaveChangesAsync();
             OrderId = context.OrderLists.ToList().Last().ID;
             var orderList = productStockList.Select(productStock => new Order
