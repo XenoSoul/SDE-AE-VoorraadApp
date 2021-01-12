@@ -7,7 +7,7 @@ namespace SDE_AE_VoorraadApp.Models
     {
         [JsonIgnore]
         public int ID { get; set; }
-        public int MachineID { get; set; }
+        public int MachineId { get; set; }
         public string Name { get; set; }
         public int LocationID { get; set; }
 

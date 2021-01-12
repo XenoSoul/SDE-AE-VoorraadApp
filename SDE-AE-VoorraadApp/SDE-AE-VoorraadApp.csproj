@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>SDE_AE_VoorraadApp</RootNamespace>
+    <UserSecretsId>1553df52-38d1-4da5-ad04-0f33f0d30958</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,10 +16,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

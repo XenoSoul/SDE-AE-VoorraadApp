@@ -34,7 +34,7 @@
     <div>
         <div class="fileName">
             <div style="display: inline-block">
-                Filename <!-- Dit moet de string worden met de filename --> &nbsp;
+                @Html.DisplayFor(model => model.Orders.Name) &nbsp;
                 <img src="~/File.png" alt="Bestand" class="file">
             </div>
         </div>
@@ -42,7 +42,26 @@
         <div class="listBorder">
             <form id="FormPrintList" method="post" runat="server">
                 <div id="printList">
+                    @foreach (var item in Model.OrderLocationJoin)
+                    {
+                        <div>
+                            @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br><br>
+                            @foreach (var order in item.Orders)
+                            {
+                                @Html.DisplayFor(modelItem => order.ProductStock.Product.Name) <text> - </text> @Html.DisplayFor(modelItem => order.Quantity)<br>
+                            }
+                            <br><br>
+                        </div>
+                    }
 
+                    <br><br>
+
+                    @foreach (var item in Model.LocationPriority)
+                    {
+                        <div>
+                            @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br>
+                        </div>
+                    }
                 </div>
                 
                 <script type="text/javascript">
@@ -57,20 +76,20 @@
                         printWindow.document.write(printContent.innerHTML);
                         printWindow.focus();
 
-                        
-                        // Firefox: "window.print();" | Chrome & Edge: "printWindow.print();"  
+
+                        // Firefox: "window.print();" | Chrome & Edge: "printWindow.print();"
                         // Firefox needs "window" to close printWindow (makes no sense at all). With "printWindow" printWindow gets highlighted and cannot be closed after
                         // Chrome & Edge need "printWindow" to print the right window instead of the entire page (makes sense). printWindow gets closed after printing
                         // Code below has to use "printWindow" (instead of "window")(otherwise the code cannot recognize the designated window to close) (common across all browsers)
-                        
-                        setTimeout(function () { printWindow.print(); }, 500);
-                        
+
+                        setTimeout(function () { document.title = "banaan123";printWindow.print(); }, 500);
+
                         setTimeout(function () {
-                            printWindow.addEventListener("focus", function(event) 
+                            printWindow.addEventListener("focus", function(event)
                             {
                                 setTimeout(function () {
-                                    printWindow.addEventListener("focus", function(event) 
-                                    { 
+                                    printWindow.addEventListener("focus", function(event)
+                                    {
                                         setTimeout(function () { printWindow.close(); }, 500);
                                     }, false);
                                 }, 1000);

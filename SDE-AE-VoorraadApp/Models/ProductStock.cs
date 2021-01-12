@@ -5,10 +5,9 @@ namespace SDE_AE_VoorraadApp.Models
 {
     public class ProductStock
     {
-        // [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
-        public int ProductID { get; set; }
-        public int MachineID { get; set; }
+        public int ProductId { get; set; }
+        public int MachineId { get; set; }
         public int AvailableCount { get; set; }
         public int MinCount { get; set; }
         public int MaxCount { get; set; }
