@@ -15,36 +15,80 @@
 </head>
 
 <body>
-<div>
-    <a class="nav-link text-dark" asp-area="" asp-page="/Index"><img src="~/Home.png" alt="Home" class="home"></a>
-</div>
+    <div>
+        <a class="nav-link text-dark" asp-area="" asp-page="/Index"><img src="~/Home.png" alt="Home" class="home"></a>
+    </div>
 
-<div>
-    <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
-</div>
+    <div>
+        <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
+    </div>
 
-<div>
-    <a class="nav-link text-dark" onclick="history.go(-1)"><img src="~/Terug.png" alt="Terug" class="back"></a>
-</div>
+    <div>
+        <a class="nav-link text-dark" onclick="history.go(-1)"><img src="~/Terug.png" alt="Terug" class="back"></a>
+    </div>
 
-<div>
-    <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
-</div>
+    <div>
+        <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
+    </div>
 
-<div>
-    <div class="fileName">
-        <div style="display: inline-block">
-            Filename <!-- Dit moet de string worden met de filename --> &nbsp;
-            <img src="~/File.png" alt="Bestand" class="file">
+    <div>
+        <div class="fileName">
+            <div style="display: inline-block">
+                Filename <!-- Dit moet de string worden met de filename --> &nbsp;
+                <img src="~/File.png" alt="Bestand" class="file">
+            </div>
         </div>
-    </div>
 
-    <div class="listBorder">
-        <!-- Hier komt de lijst in te staan -->
-    </div>
+        <div class="listBorder">
+            <form id="FormPrintList" method="post" runat="server">
+                <div id="printList">
 
-    <form method="POST" asp-page="LG1_1">
-        <input type="submit" asp-page-handler="Index" value="Lijst Opslaan" class="saveList">
-    </form>
-</div>
+                </div>
+                
+                <script type="text/javascript">
+                   function printPartOfPage(elementId)
+                    {
+                        var printContent = document.getElementById(elementId);
+                        var windowUrl = 'about:blank';
+                        var uniqueName = new Date();
+                        var windowName = 'Print' + uniqueName.getTime();
+                        var printWindow = window.open(windowUrl, windowName, 'left=0,top=0,width=0,height=0');
+
+                        printWindow.document.write(printContent.innerHTML);
+                        printWindow.focus();
+
+                        
+                        // Firefox: "window.print();" | Chrome & Edge: "printWindow.print();"  
+                        // Firefox needs "window" to close printWindow (makes no sense at all). With "printWindow" printWindow gets highlighted and cannot be closed after
+                        // Chrome & Edge need "printWindow" to print the right window instead of the entire page (makes sense). printWindow gets closed after printing
+                        // Code below has to use "printWindow" (instead of "window")(otherwise the code cannot recognize the designated window to close) (common across all browsers)
+                        
+                        setTimeout(function () { printWindow.print(); }, 500);
+                        
+                        setTimeout(function () {
+                            printWindow.addEventListener("focus", function(event) 
+                            {
+                                setTimeout(function () {
+                                    printWindow.addEventListener("focus", function(event) 
+                                    { 
+                                        setTimeout(function () { printWindow.close(); }, 500);
+                                    }, false);
+                                }, 1000);
+                            }, false);
+                        }, 1000);
+
+                        // Extra code to make it also function for Chrome & Edge
+                        setTimeout(function () { printWindow.focus(); }, 600);
+                        setTimeout(function () { printWindow.close(); }, 600);
+                    }
+                </script>
+            </form>
+        </div>
+        
+        <form method="POST" asp-page="LG1_1">
+                <input type="submit" asp-page-handler="Index" value="Lijst Opslaan" class="saveList">
+            </form>
+
+            <input type="button" class="printButton" value="Print" onclick="JavaScript:printPartOfPage('printList');">
+        </div>
 </body>
