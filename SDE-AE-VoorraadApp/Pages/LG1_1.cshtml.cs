@@ -20,11 +20,14 @@ namespace SDE_AE_VoorraadApp.Pages
         }
 
         public OrderList Orders { get; set; }
-        public List<ListRequester.OrderLocationJoin> WTFIsThis { get; set; }
+        public List<ListRequester.OrderLocationJoin> OrderLocationJoin { get; private set; }
+        public List<ListRequester.OrderLocationJoin> LocationPriority { get; private set; }
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            WTFIsThis = await ListRequester.RequestRecentList(_context);
+            var orderLocation = ListRequester.RequestRecentList(_context);
+            OrderLocationJoin = orderLocation;
+            LocationPriority = orderLocation.OrderByDescending(ol => ol.Priority).ToList();
             Orders = _context.OrderLists.ToList().Last();
         }
 
