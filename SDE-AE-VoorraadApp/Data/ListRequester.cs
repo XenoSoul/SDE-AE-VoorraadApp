@@ -11,7 +11,7 @@ namespace SDE_AE_VoorraadApp.Data
     {
         private static int OrderId { get; set; }
 
-        public static async Task<int> CreateList(LocationContext context, List<int> locations)
+        public static async Task<int> CreateList(LocationContext context, IEnumerable<int> locations)
         {
             var locationsList = locations.Select(location => context.Locations.ToList().Find(l => l.ID == location)).ToList();
             var machineList = new List<Machine>();
