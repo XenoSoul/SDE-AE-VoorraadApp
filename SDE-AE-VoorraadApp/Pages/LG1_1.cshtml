@@ -34,17 +34,35 @@
 <div>
     <div class="fileName">
         <div style="display: inline-block">
-            Filename <!-- Dit moet de string worden met de filename --> &nbsp;
+            @Html.DisplayFor(model => model.Orders.Name) &nbsp;
             <img src="~/File.png" alt="Bestand" class="file">
         </div>
     </div>
 
     <div class="listBorder">
-        <!-- Hier komt de lijst in te staan -->
-    </div>
+        @foreach (var item in Model.OrderLocationJoin)
+        {
+        <div>
+            @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br><br>
+            @foreach (var order in item.Orders)
+            {
+                @Html.DisplayFor(modelItem => order.ProductStock.Product.Name) <text> - </text> @Html.DisplayFor(modelItem => order.Quantity)<br>
+            }
+            <br><br>
+        </div>
+        }
 
+        <br><br>
+
+        @foreach (var item in Model.LocationPriority)
+        {
+            <div>
+                @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br>
+            </div>
+        }
+    </div>
     <form method="POST" asp-page="LG1_1">
         <input type="submit" asp-page-handler="Index" value="Lijst Opslaan" class="saveList">
     </form>
-</div>
+    </div>
 </body>
