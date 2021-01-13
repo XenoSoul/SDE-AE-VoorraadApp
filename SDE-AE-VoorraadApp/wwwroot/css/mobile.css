@@ -165,21 +165,31 @@
         margin-top: 15px;
     }
 
+    .fontSize {
+        font-size: 12px;
+    }
+
+    .checkAll {
+        font-size: 12px;
+    }
+
     /*---------------------------*/
     /* LG1_1 */
     /*---------------------------*/
 
     .listBorder {
         left: 50%;
-        top: 62.5%;
+        top: 56.5%;
         width: 70vw;
-        height: 55vh;
+        height: 45vh;
         position: absolute;
         -moz-transform: translateX(-50%) translateY(-50%);
         -webkit-transform: translateX(-50%) translateY(-50%);
         transform: translateX(-50%) translateY(-50%);
-        border-radius: 20px;
+        border-radius: 7.5px;
         border: 5px solid #0C9544;
+        overflow-y: scroll;
+        font-size: 12px;
     }
 
     .saveList {
@@ -190,24 +200,18 @@
         font-weight: 700;
         width: 150px;
         height: 40px;
-        text-align: center;
-        position: absolute;
-        -moz-transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
-        transform: translateX(-50%);
-        left: 50%;
-        top: 93%;
+        position: relative;
     }
 
     .file {
         width: auto;
-        height: 3.5vh;
+        height: 2.5vh;
         position: absolute;
-        margin-top: 0.5%;
+        /*empty line to keep it even with desktop.css*/
     }
 
     .fileName {
-        font-size: 3vh;
+        font-size: 1.5vh;
         text-align: center;
         position: absolute;
         -moz-transform: translateX(-50%);
@@ -215,8 +219,96 @@
         transform: translateX(-50%);
         left: 50%;
         top: 30%;
-        width: 50vw;
+        width: 95vw;
         height: 2.5vw;
+    }
+
+    .printButton {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        width: 150px;
+        height: 40px;
+        position: relative;
+        top: 20px;
+        /*empty line to keep it even with desktop.css*/
+    }
+    
+    .divCenter {
+        height: 100px;
+        width: 150px;
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        top: 81%;
+        left: 50%;
+    }
+
+    /*---------------------------*/
+    /* ERROR 404 */
+    /*---------------------------*/
+
+    .text404 {
+        text-align: center;
+        font-weight: 700;
+        font-size: 6vh;
+        color: #0c9544;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 40%;
+        left: 50%;
+        width: 75vw;
+    }
+
+    .text404-2 {
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 60vh;
+        left: 50vw;
+        height: 60vh;
+        width: 95vw;
+    }
+
+    /*---------------------------*/
+    /* Dupe List */
+    /*---------------------------*/
+
+    .returnHome {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        font-size: 3.2vh;
+        max-width: 600px;
+        min-width: 200px;
+        min-height: 40px;
+        width: 65vw;
+        height: 7vh;
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        left: 50%;
+        top: 70vh;
+    }
+
+    .returnHome2 {
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50vh;
+        left: 50vw;
+        height: 90vh;
+        width: 95vw;
     }
 
     /*---------------------------*/
@@ -234,6 +326,19 @@
         transform: translateX(-50%) translateY(-50%);
         top: 50%;
         left: 50%;
+    }
+
+    .textMiddle {
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.75vh;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50%;
+        left: 50%;
+        width: 75vw;
     }
 
     /*#####################################################################################################*/

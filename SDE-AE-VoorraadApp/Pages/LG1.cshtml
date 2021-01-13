@@ -15,42 +15,43 @@
 </head>
 
 <body>
-<div>
-    <a class="nav-link text-dark" asp-area="" asp-page="/Index"><img src="~/Home.png" alt="Home" class="home"></a>
-</div>
+    <div>
+        <a class="nav-link text-dark" asp-area="" asp-page="/Index"><img src="~/Home.png" alt="Home" class="home"></a>
+    </div>
 
-<div>
-    <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
-</div>
+    <div>
+        <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
+    </div>
 
-<div>
-    <a class="nav-link text-dark" onclick="history.go(-1)"><img src="~/Terug.png" alt="Terug" class="back"></a>
-</div>
+    <div>
+        <a class="nav-link text-dark" onclick="history.go(-1)"><img src="~/Terug.png" alt="Terug" class="back"></a>
+    </div>
 
-<div>
-    <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
-</div>
+    <div>
+        <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
+    </div>
 
 
 
-<div class="filiaalSelector">
-    <form method="POST" asp-page="LG1">
-        <label for="filialen" id="checkBoxTitel"><b>Filialen:</b></label><br>
-        <div class="checkboxCenter">
-            <div class="checkAll">
-                <input type="checkbox" name="LocationToPrint" value="0"> Alles<br><br>
-            </div>
-            <div class="checkOthers">
-                @foreach (var item in Model.Location)
-                {
-                    <div>
-                        <input type="checkbox" name="LocationToPrint" value="@item.ID"> @Html.DisplayFor(modelItem => item.Place) - @Html.DisplayFor(modelItem => item.City)
-                    </div>
-                }
-            </div>
-            <br>
-            <input type="submit" class="generateList" asp-page-handler="LG1_1" value="Genereer lijst">
-        </div> 
-    </form>
-</div>
+    <div class="filiaalSelector">
+        <form method="POST" asp-page="LG1">
+            <label for="filialen" id="checkBoxTitel"><b>Filialen:</b></label><br>
+            <div class="checkboxCenter">
+                <div class="checkAll">
+                    <input type="checkbox" name="LocationToPrint" value="0"> Alles<br><br>
+                </div>
+                <div class="checkOthers">
+                    @foreach (var item in Model.Location)
+                    {
+                        <div class="fontSize">
+                            <input type="checkbox" name="LocationToPrint" value="@item.ID"> 
+                            @Html.DisplayFor(modelItem => item.Place) - @Html.DisplayFor(modelItem => item.City)
+                        </div>
+                    }
+                </div>
+                <br>
+                <input type="submit" class="generateList" asp-page-handler="LG1_1" value="Genereer lijst">
+            </div> 
+        </form>
+    </div>
 </body>

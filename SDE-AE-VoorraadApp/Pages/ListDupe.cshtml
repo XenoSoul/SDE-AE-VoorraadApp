@@ -1,0 +1,33 @@
+﻿@page
+@model SDE_AE_VoorraadApp.Pages.ListDupeModel
+@{
+    ViewData["Title"] = "Filiaal Selecteren";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/desktop.css" />
+    <link rel="stylesheet" href="~/css/mobile.css" />
+}
+
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+    <div>
+        <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
+    </div>
+
+    <div class="returnHome2">
+        <div class="textMiddle">
+            U wordt teruggestuurd naar de Home Page omdat u een lijst probeerde aan te maken die al gegenereerd is.<br><br>
+            Als u alsnog een lijst wilt creeëren, zorgt u er dan voor dat u een unieke selectie bij de filialen maakt.
+        </div>
+        <div>
+            <form method="POST" asp-page="ListDupe">
+                <input type="submit" asp-page-handler="Index" value="Terug naar Home" class="returnHome">
+            </form>
+        </div>
+    </div>
+</body>

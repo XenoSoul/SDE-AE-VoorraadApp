@@ -2,7 +2,7 @@
     body {
         margin: 0;
     }
-    
+
     /*#####################################################################################################*/
     /* CLASS TYPE */
     /*#####################################################################################################*/
@@ -134,18 +134,18 @@
         -moz-transform: translateX(-50%) translateY(-50%);
         -webkit-transform: translateX(-50%) translateY(-50%);
         transform: translateX(-50%) translateY(-50%);
-        top: 50vh;
+        top: 70vh;
         left: 50vw;
-        height: 25.926vh;
-        width: 40vw;
+        height: 60vh;
+        width: 20vw;
+        min-width: 350px;
     }
 
     .checkboxCenter {
         position: absolute;
-        -moz-transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
-        transform: translateX(-50%);
-        left: 50%;
+        width: 20vw;
+        min-width: 350px;
+        margin-left: 100px;
     }
 
     .generateList {
@@ -163,8 +163,16 @@
         transform: translateX(-50%) translateY(-50%);
         left: 50%;
         margin-top: 15px;
+        margin-left: -100px;
     }
-    
+
+    /**/
+    /**/
+    /**/
+    /**/
+    /**/
+    /**/
+    /**/
     /*---------------------------*/
     /* LG1_1 */
     /*---------------------------*/
@@ -181,6 +189,7 @@
         border-radius: 5px;
         border: 5px solid #0C9544;
         overflow-y: scroll;
+        /*empty line to keep it even with mobile.css*/
     }
 
     .saveList {
@@ -191,13 +200,7 @@
         font-weight: 700;
         width: 150px;
         height: 40px;
-        text-align: center;
-        position: absolute;
-        -moz-transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
-        transform: translateX(-50%);
-        top: 93%;
-        left: 45%;
+        position: relative;
     }
 
     .file {
@@ -216,7 +219,7 @@
         transform: translateX(-50%);
         left: 50%;
         top: 30%;
-        width: 50vw;
+        width: 95vw;
         height: 2.5vw;
     }
 
@@ -228,13 +231,84 @@
         font-weight: 700;
         width: 150px;
         height: 40px;
-        text-align: center;
+        position: relative;
+        margin-left: 250px;
+        top: -40px;
+    }
+
+    .divCenter {
+        height: 40px;
+        width: 400px;
         position: absolute;
         -moz-transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
         transform: translateX(-50%);
-        top: 93%;
-        left: 55%;
+        top: 91%;
+        left: 50%;
+    }
+
+    /*---------------------------*/
+    /* ERROR 404 */
+    /*---------------------------*/
+
+    .text404 {
+        text-align: center;
+        font-weight: 700;
+        font-size: 9vh;
+        color: #0c9544;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 40%;
+        left: 50%;
+        width: 75vw;
+    }
+
+    .text404-2 {
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50vh;
+        left: 50vw;
+        height: 90vh;
+        width: 95vw;
+    }
+
+    /*---------------------------*/
+    /* Dupe List */
+    /*---------------------------*/
+
+    .returnHome {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        font-size: 3.2vh;
+        max-width: 600px;
+        min-width: 300px;
+        min-height: 40px;
+        width: 20vw;
+        height: 8vh;
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        left: 50%;
+        top: 75vh;
+    }
+
+    .returnHome2 {
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50vh;
+        left: 50vw;
+        height: 90vh;
+        width: 95vw;
     }
 
     /*---------------------------*/
@@ -252,6 +326,19 @@
         transform: translateX(-50%) translateY(-50%);
         top: 50%;
         left: 50%;
+    }
+
+    .textMiddle {
+        text-align: center;
+        font-weight: 700;
+        font-size: 3.5vh;
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        top: 50%;
+        left: 50%;
+        width: 75vw;
     }
 
     /*#####################################################################################################*/
