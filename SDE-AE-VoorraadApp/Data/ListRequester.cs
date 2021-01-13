@@ -38,7 +38,7 @@ namespace SDE_AE_VoorraadApp.Data
             await context.OrderLists.AddAsync(new OrderList
             {
                 DateTimeCreated = DateTime.Now,
-                Name = $"{DateTime.Now:dddd_dd-MM-yyyy_HH:mm:ss}_Filialen-{string.Join("", locations.ToArray()) }"
+                Name = $"{DateTime.Now:dddd_dd-MM-yyyy_HH-mm-ss}_Filialen-{string.Join("", locations.ToArray()) }"
             });
             await context.SaveChangesAsync();
             OrderId = context.OrderLists.ToList().Last().ID;
