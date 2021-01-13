@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using SDE_AE_VoorraadApp.Models;
 
 namespace SDE_AE_VoorraadApp.Pages
 {
+    [Authorize]
     public class LG1Model : PageModel
     {
         private readonly LocationContext _context;

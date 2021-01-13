@@ -16,7 +16,9 @@
 
 <body>
 <div>
-    <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
+    <form class="form-inline" asp-page="Index" asp-page-handler="Logout" method="post">
+        <button type="submit" class="nav-link btn btn-link text-dark"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></button>
+    </form>
 </div>
 
 <div>

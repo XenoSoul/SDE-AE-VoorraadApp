@@ -1,22 +1,27 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SDE_AE_VoorraadApp.Data;
 using SDE_AE_VoorraadApp.Models;
 
 namespace SDE_AE_VoorraadApp.Pages
 {
+    [Authorize]
     public class LG1_1Model : PageModel
     {
         private readonly LocationContext _context;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ILogger<LG1_1Model> _logger;
 
-        public LG1_1Model(LocationContext context)
+        public LG1_1Model(SignInManager<IdentityUser> signInManager, ILogger<LG1_1Model> logger, LocationContext context)
         {
             _context = context;
+            _signInManager = signInManager;
+            _logger = logger;
         }
 
         public OrderList Orders { get; set; }
