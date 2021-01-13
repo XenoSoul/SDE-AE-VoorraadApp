@@ -54,6 +54,7 @@ namespace SDE_AE_VoorraadApp.Data
             DbInitializer.Initialize(context);
         }
 
+        // TODO: Change name of function to something a bit more sens able
         private static async Task<List<ProductStock>> AsyncDbProductStockMachineProductLinkerRevampSymphonyOfTheNight(List<Task<DbInitializer._ProductStock>> newStoks, LocationContext context)
         {
             var _context = context;

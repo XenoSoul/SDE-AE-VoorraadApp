@@ -20,12 +20,31 @@
 </div>
 
 <div class="form">
-    <form method="POST" asp-page="Login">
-        <label for="username" id="textFieldTitel"><b>Gebruikersnaam:</b></label><br>
-        <input type="text" id="loginField" name="username" placeholder="Vul uw gebruikersnaam in..."><br><br><br>
-        <label for="password" id="textFieldTitel"><b>Wachtwoord:</b></label><br>
-        <input type="password" id="loginField" name="password" placeholder="Vul uw wachtwoord in..."><br><br><br>
-        <input type="submit" asp-page-handler="Index" value="Inloggen" class="logIn">
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Input.Email" id="textFieldTitel"></label><br>
+            <input asp-for="Input.Email" type="text" id="loginField" class="form-control" placeholder="Vul uw gebruikersnaam in..."/>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <br><br><br>
+        <div class="form-group">
+            <label asp-for="Input.Password" id="textFieldTitel"></label><br>
+            <input asp-for="Input.Password" id="loginField" class="form-control" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <br><br><br>
+        <div class="form-group">
+            <div class="checkbox">
+                <label asp-for="Input.RememberMe">
+                    <input asp-for="Input.RememberMe" />
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="logIn">Log in</button>
+        </div>
     </form>
 </div>
 </body>

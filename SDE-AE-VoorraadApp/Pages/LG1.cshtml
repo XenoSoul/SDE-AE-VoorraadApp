@@ -15,25 +15,24 @@
 </head>
 
 <body>
-    <div>
-        <a class="nav-link text-dark" asp-area="" asp-page="/Index"><img src="~/Home.png" alt="Home" class="home"></a>
-    </div>
+<div>
+    <a class="nav-link text-dark" asp-area="" asp-page="/Index"><img src="~/Home.png" alt="Home" class="home"></a>
+</div>
 
-    <div>
-        <a class="nav-link text-dark" asp-area="" asp-page="/Login"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></a>
-    </div>
+<div>
+    <form class="form-inline" asp-page="Index" asp-page-handler="Logout" method="post">
+        <button type="submit" class="nav-link btn btn-link text-dark"><img src="~/LogUit.png" alt="Log Uit" class="logOut"></button>
+    </form>
+</div>
 
-    <div>
-        <a class="nav-link text-dark" onclick="history.go(-1)"><img src="~/Terug.png" alt="Terug" class="back"></a>
-    </div>
+<div>
+    <a class="nav-link text-dark" onclick="history.go(-1)"><img src="~/Terug.png" alt="Terug" class="back"></a>
+</div>
 
-    <div>
-        <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
-    </div>
-
-
-
-    <div class="filiaalSelector">
+<div>
+    <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
+</div>
+<div class="filiaalSelector">
         <form method="POST" asp-page="LG1">
             <label for="filialen" id="checkBoxTitel"><b>Filialen:</b></label><br>
             <div class="checkboxCenter">

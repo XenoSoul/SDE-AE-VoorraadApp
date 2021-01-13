@@ -34,7 +34,6 @@ namespace SDE_AE_VoorraadApp.Data
             if (productStockList.Count == 0)
                 return productStockList.Count;
 
-            // TODO: Change the name of the document to something more suiting
             await context.OrderLists.AddAsync(new OrderList
             {
                 DateTimeCreated = DateTime.Now,
