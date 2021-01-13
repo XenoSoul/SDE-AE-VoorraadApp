@@ -42,29 +42,95 @@
     </div>
 
     <div class="listBorder">
-        @foreach (var item in Model.OrderLocationJoin)
-        {
-        <div>
-            @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br><br>
-            @foreach (var order in item.Orders)
-            {
-                @Html.DisplayFor(modelItem => order.ProductStock.Product.Name) <text> - </text> @Html.DisplayFor(modelItem => order.Quantity)<br>
-            }
-            <br><br>
-        </div>
-        }
-
-        <br><br>
-
-        @foreach (var item in Model.LocationPriority)
-        {
-            <div>
-                @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br>
+        <form id="FormPrintList" method="post" runat="server">
+            <div id="printList">
+                @foreach (var item in Model.OrderLocationJoin)
+                {
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br>---------------------------------------------------------------<br>
+                        @foreach (var order in item.Orders)
+                        {
+                            @Html.DisplayFor(modelItem => order.ProductStock.Product.Name)
+                            <text> - </text>
+                            @Html.DisplayFor(modelItem => order.Quantity)<br>
+                        }
+                        <br><br>
+                    </div>
+                }
+                <br>
+                Rijroute:<br>
+                ---------------------------------------------------------------<br>
+                @foreach (var item in Model.LocationPriority)
+                {
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br>
+                    </div>
+                }
             </div>
-        }
+
+            <script type="text/javascript">
+                function printPartOfPage(elementId) {
+                    var printContent = document.getElementById(elementId);
+                    var windowUrl = 'about:blank';
+                    var uniqueName = new Date();
+                    var windowName = 'Print' + uniqueName.getTime();
+                    var printWindow = window.open(windowUrl, windowName, 'left=0,top=0,width=0,height=0');
+
+                    printWindow.document.write(printContent.innerHTML);
+                    printWindow.focus();
+
+
+                    // Firefox: "window.print();" | Chrome & Edge: "printWindow.print();"
+                    // Firefox needs "window" to close printWindow (makes no sense at all). With "printWindow" printWindow gets highlighted and cannot be closed after
+                    // Chrome & Edge need "printWindow" to print the right window instead of the entire page (makes sense). printWindow gets closed after printing
+                    // Code below has to use "printWindow" (instead of "window")(otherwise the code cannot recognize the designated window to close) (common across all browsers)
+
+                    setTimeout(function() { printWindow.print(); }, 500);
+
+                    setTimeout(function() {
+                            printWindow.addEventListener("focus",
+                                function(event) {
+                                    setTimeout(function() {
+                                            printWindow.addEventListener("focus",
+                                                function(event) {
+                                                    setTimeout(function() { printWindow.close(); }, 500);
+                                                },
+                                                false);
+                                        },
+                                        1000);
+                                },
+                                false);
+                        },
+                        1000);
+
+                    // Extra code to make it also function for Chrome & Edge
+                    setTimeout(function() { printWindow.focus(); }, 600);
+                    setTimeout(function() { printWindow.close(); }, 600);
+                }
+            </script>
+
+            <script type="text/javascript">
+                function copyStringToClipboard() {
+                    str = "@Html.DisplayFor(model => model.Orders.Name)";
+                    var el = document.createElement('textarea');
+                    el.value = str;
+                    el.setAttribute('readonly', '');
+                    el.style = { position: 'absolute', left: '-9999px' };
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                }
+            </script>
+        </form>
     </div>
-    <form method="POST" asp-page="LG1_1">
-        <input type="submit" asp-page-handler="Index" value="Lijst Opslaan" class="saveList">
-    </form>
+
+    <div class="divCenter">
+        <form method="POST" asp-page="LG1_1">
+            <input type="submit" asp-page-handler="Index" value="Lijst Opslaan" class="saveList">
+        </form>
+
+        <input type="button" class="printButton" value="Print" onclick="copyStringToClipboard();printPartOfPage('printList');">
     </div>
+</div>
 </body>

@@ -41,7 +41,7 @@ namespace SDE_AE_VoorraadApp.Pages
         public async Task<IActionResult> OnPostLG1_1()
         {
             var rad = await ListRequester.CreateList(_context, LocationToPrint.Contains(0) ? _context.Locations.ToList().Select(l => l.ID): LocationToPrint);
-            return RedirectToPage(rad > 0 ? "LG1_1" : "Index");
+            return RedirectToPage(rad > 0 ? "LG1_1" : "ListDupe");
         }
     }
 }
