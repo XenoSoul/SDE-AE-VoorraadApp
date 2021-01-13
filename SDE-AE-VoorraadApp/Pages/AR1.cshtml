@@ -34,6 +34,16 @@
 </div>
 
 <div class="placeholderTitel">
-    W.I.P.:<br>Archief
+    @foreach (var item in Model.OrderLocationJoin)
+    {
+        <div>
+            @Html.DisplayFor(modelItem => item.Day.Date)<br>---------------------------------------------------------------<br>
+            @foreach (var orderList in item.OrderLists)
+            {
+                @Html.DisplayFor(modelItem => orderList.Name)<br>
+            }
+            <br><br>
+        </div>
+    }
 </div>
 </body>

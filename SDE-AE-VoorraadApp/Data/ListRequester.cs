@@ -27,7 +27,7 @@ namespace SDE_AE_VoorraadApp.Data
                 productStockList.AddRange(context.ProductStocks.ToList().FindAll(ps =>
                     ps.MachineId == machine.ID && ps.RefillAdviceCount -
                     (sa != null && context.Orders.ToList().Find(o => o.ProductStockID == ps.ID) != null
-                        ? context.Orders.ToList().Find(o => o.ProductStockID == ps.ID).Quantity
+                        ? context.Orders.ToList().Find(o => o.ProductStockID.Equals(ps.ID)).Quantity
                         : 0) > 0));
             }
 
@@ -61,16 +61,31 @@ namespace SDE_AE_VoorraadApp.Data
         }
 
         // TODO: Implement within frontend code
-        public static List<OrderList> RequestDateOrderLists(LocationContext context, DateTime date)
+        public static List<DateTimeOrderList> RequestDateOrderLists(LocationContext context)
         {
-            return context.OrderLists.ToList().FindAll(ol => ol.DateTimeCreated.Date == date.Date);
+            var datetimeOrderLists = new List<DateTimeOrderList>();
+            for (int i = 0; i < 365; i++)
+            {
+                var dateOrderLists = context.OrderLists.ToList().FindAll(ol =>
+                    ol.DateTimeCreated.Date == DateTime.Now.Subtract(new TimeSpan(i, 0, 0, 0)).Date);
+                if (dateOrderLists.Count == 0)
+                    continue;
+
+                datetimeOrderLists.Add(new DateTimeOrderList
+                {
+                    Day = DateTime.Now.Subtract(new TimeSpan(i, 0, 0, 0)),
+                    OrderLists = dateOrderLists
+                });
+            }
+
+            return datetimeOrderLists;
         }
 
         // TODO: Implement within frontend code
         public static List<OrderLocationJoin> RequestDateOrderList(LocationContext context, int orderListId)
         {
             return CreateOrderLocationJoins(
-                context.Orders.ToList().FindAll(o => o.OrderListID == orderListId), context);
+                context.Orders.ToList().FindAll(o => o.OrderListID.Equals(orderListId)), context);
         }
 
         private static List<OrderLocationJoin> CreateOrderLocationJoins(List<Order> orders, LocationContext context)
@@ -85,10 +100,16 @@ namespace SDE_AE_VoorraadApp.Data
                 select new OrderLocationJoin { Orders = allOrdersLocation, Location = location, Priority = allOrdersPriority }).ToList();
         }
 
+        public class DateTimeOrderList
+        {
+            public DateTime Day { get; set; }
+            public List<OrderList> OrderLists { get; set; }
+        }
+
         public class OrderLocationJoin
         {
-            public List<Order> Orders { get; set; }
             public Location Location { get; set; }
+            public List<Order> Orders { get; set; }
             public float Priority { get; set; }
         }
     }

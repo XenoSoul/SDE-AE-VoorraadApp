@@ -65,7 +65,7 @@ namespace SDE_AE_VoorraadApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -86,6 +86,8 @@ namespace SDE_AE_VoorraadApp
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            IdentityDataInitializer.SeedUsers(userManager);
 
             app.UseEndpoints(endpoints =>
             {
