@@ -29,18 +29,17 @@ namespace SDE_AE_VoorraadApp.Pages
 
         public async Task OnGetAsync()
         {
-            var result = await DbUpdater.TwinkUpdate(_context);
-            if (result > 0)
+            // var result = await DbUpdater.TwinkUpdate(_context);
+            /*if (result > 0)
             {
                 // TODO: Update Console.WriteLine to something in debug output
                 Console.WriteLine($"{result} lines were updated!!!");
-            }
+            }*/
             Location = await _context.Locations.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostLG1_1()
         {
-            // TODO: Select all option functionality
             var rad = await ListRequester.CreateList(_context, LocationToPrint.Contains(0) ? _context.Locations.ToList().Select(l => l.ID): LocationToPrint);
             return RedirectToPage(rad > 0 ? "LG1_1" : "Index");
         }

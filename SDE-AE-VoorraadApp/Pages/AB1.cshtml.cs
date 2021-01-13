@@ -39,29 +39,24 @@ namespace SDE_AE_VoorraadApp.Pages
         public async Task<IActionResult> OnGetAsync()
         {
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return Page();
+            var user = new IdentityUser {UserName = "Yaboi", Email = "yaboi@msn.com" };
+            var result = await _userManager.CreateAsync(user, "$Tr0NgPa55WorD!");
+            if (result.Succeeded)
             {
-                var user = new IdentityUser {UserName = "Yaboi", Email = "yaboi@msn.com" };
-                var result = await _userManager.CreateAsync(user, "$Tr0NgPa55WorD!");
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
+                _logger.LogInformation("User created a new account with password.");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new {email = "yaboi@msn.com", returnUrl = "Login"});
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect("Login");
-                    }
-                }
-
-                foreach (var error in result.Errors)
+                if (_userManager.Options.SignIn.RequireConfirmedAccount)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    return RedirectToPage("RegisterConfirmation", new {email = "yaboi@msn.com", returnUrl = "Login"});
                 }
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return LocalRedirect("Login");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
             }
 
             // If we got this far, something failed, redisplay form

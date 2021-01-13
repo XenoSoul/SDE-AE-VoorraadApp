@@ -28,9 +28,11 @@ namespace SDE_AE_VoorraadApp
             var services = scope.ServiceProvider;
             try
             {
-                var context = services.GetRequiredService<LocationContext>();
-                // context.Database.EnsureCreated();
-                DbInitializer.Initialize(context);
+                var contextLocationContext = services.GetRequiredService<LocationContext>();
+                contextLocationContext.Database.EnsureCreated();
+                // DbInitializer.Initialize(contextLocationContext);
+                var contextLoginContext = services.GetRequiredService<LoginContext>();
+                contextLoginContext.Database.EnsureCreated();
             }
             catch (Exception ex)
             {
