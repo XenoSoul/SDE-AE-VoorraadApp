@@ -18,9 +18,7 @@ namespace SDE_AE_VoorraadApp.Pages
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager,
-            ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -83,7 +81,7 @@ namespace SDE_AE_VoorraadApp.Pages
                 _logger.LogInformation("User logged in.");
                 return LocalRedirect(returnUrl);
             }
-            if (result.RequiresTwoFactor)
+            /*if (result.RequiresTwoFactor)
             {
                 return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
             }
@@ -91,7 +89,7 @@ namespace SDE_AE_VoorraadApp.Pages
             {
                 _logger.LogWarning("User account locked out.");
                 return RedirectToPage("./Lockout");
-            }
+            }*/
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
 

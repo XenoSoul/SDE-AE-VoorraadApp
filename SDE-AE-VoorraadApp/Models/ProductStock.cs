@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-// TODO: Documentation
 namespace SDE_AE_VoorraadApp.Models
 {
     public class ProductStock

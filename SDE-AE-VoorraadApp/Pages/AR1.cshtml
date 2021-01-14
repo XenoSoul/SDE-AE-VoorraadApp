@@ -44,8 +44,8 @@
                 @foreach (var orderList in item.OrderLists)
                 {
                     <div>
-                        <form asp-page="AR1_1" method="post">
-                            <button asp-for class="invisButton" id="orderListIDAR1" value="@Html.DisplayFor(modelItem=>orderList.ID)">@Html.DisplayFor(modelItem => orderList.Name)</button><br>
+                        <form asp-page="AR1" method="POST">
+                            <button asp-for class="invisButton" name="orderListIDAR1" value="@Html.DisplayFor(modelItem=>orderList.ID)">@Html.DisplayFor(modelItem => orderList.Name)</button><br>
                         </form>
                     </div>
                 }
