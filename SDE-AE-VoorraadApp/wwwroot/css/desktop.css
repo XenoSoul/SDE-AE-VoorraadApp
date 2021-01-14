@@ -73,20 +73,22 @@
     }
 
     .hp-Button1 {
-        top: 35%;
-        left: 50%;
-    }
-
-    .hp-Button2 {
         top: 50%;
         left: 50%;
     }
 
+    .hp-Button2 {
+        top: 65%;
+        left: 50%;
+    }
+
+    /*Ongebruikt, zie "Index.cshtml" documentatie*/
     .hp-Button3 {
         top: 65%;
         left: 50%;
     }
 
+    /*Ongebruikt, zie "Index.cshtml" documentatie*/
     .hp-Button4 {
         top: 80%;
         left: 50%;
@@ -312,6 +314,26 @@
     }
 
     /*---------------------------*/
+    /* AR1 */
+    /*---------------------------*/
+
+    .archiveDateTitle {
+        text-align: center;
+        color: #0c9544;
+        font-size: 2vw;
+        font-weight: 700;
+    }
+
+    .invisButton {
+        background: transparent;
+        border: none !important;
+        text-align: center;
+        color: #000000;
+        font-size: 1.2vw;
+        font-weight: 700;
+    }
+
+    /*---------------------------*/
     /* Misc */
     /*---------------------------*/
 
@@ -340,11 +362,10 @@
         left: 50%;
         width: 75vw;
     }
-
+    ​
     /*#####################################################################################################*/
     /* INPUT TYPE */
     /*#####################################################################################################*/
-
     input[type="text"] {
         text-align: center;
     }
