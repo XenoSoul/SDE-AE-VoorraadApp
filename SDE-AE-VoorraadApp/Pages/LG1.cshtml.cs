@@ -31,11 +31,11 @@ namespace SDE_AE_VoorraadApp.Pages
 
         public async Task OnGetAsync()
         {
-            /*var result = await DbUpdater.TwinkUpdate(_context);
+            var result = await DbUpdater.TwinkUpdate(_context);
             if (result > 0)
             {
                 _logger.LogInformation($"{result} lines were updated!!!");
-            }*/
+            }
             Location = await _context.Locations.ToListAsync();
         }
 

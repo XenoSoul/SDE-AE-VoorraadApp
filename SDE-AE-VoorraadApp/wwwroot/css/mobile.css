@@ -73,20 +73,22 @@
     }
 
     .hp-Button1 {
-        top: 35%;
-        left: 50%;
-    }
-
-    .hp-Button2 {
         top: 50%;
         left: 50%;
     }
 
+    .hp-Button2 {
+        top: 65%;
+        left: 50%;
+    }
+
+    /*Ongebruikt, zie "Index.cshtml" documentatie*/
     .hp-Button3 {
         top: 65%;
         left: 50%;
     }
 
+    /*Ongebruikt, zie "Index.cshtml" documentatie*/
     .hp-Button4 {
         top: 80%;
         left: 50%;
@@ -309,6 +311,52 @@
         left: 50vw;
         height: 90vh;
         width: 95vw;
+    }
+
+    /*---------------------------*/
+    /* AR1 */
+    /*---------------------------*/
+
+    .archiveDateTitle {
+        text-align: center;
+        color: #0c9544;
+        font-size: 3.5vw;
+        font-weight: 700;
+    }
+
+    .invisButton {
+        background: transparent;
+        border: none !important;
+        text-align: center;
+        color: #000000;
+        font-size: 2.3vw;
+        font-weight: 700;
+    }
+
+    /*---------------------------*/
+    /* AR1_1 */
+    /*---------------------------*/
+
+    .divCenterAR1_1 {
+        height: 40px;
+        width: 150px;
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        top: 85%;
+        left: 50%;
+    }
+
+    .printButtonMiddle {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        width: 150px;
+        height: 40px;
+        position: relative;
     }
 
     /*---------------------------*/
