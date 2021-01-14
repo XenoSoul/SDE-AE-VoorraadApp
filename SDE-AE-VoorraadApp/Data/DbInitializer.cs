@@ -162,7 +162,7 @@ namespace SDE_AE_VoorraadApp.Data
         /// Context of the LocationContext Database.
         /// </param>
         /// <returns>
-        /// A list of ProductStock with correct Ids
+        /// A list of ProductStock with correct Ids.
         /// </returns>
         private static List<ProductStock> DbProductStockMachineProductLinker(List<_ProductStock> productStocks, LocationContext context)
         {

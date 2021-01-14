@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SDE_AE_VoorraadApp.Models;
 
-// TODO: Documentation
 namespace SDE_AE_VoorraadApp.Data
 {
     public class LocationContext : DbContext
     {
-        public LocationContext (DbContextOptions<LocationContext> options)
-            : base(options)
+        public LocationContext (DbContextOptions<LocationContext> options) : base(options)
         {
+
         }
 
+        // All the objects used to create the LocationContext Database.
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderList> OrderLists { get; set; }
         public DbSet<ProductStock> ProductStocks { get; set; }
@@ -23,6 +19,9 @@ namespace SDE_AE_VoorraadApp.Data
         public DbSet<Machine> Machines { get; set; }
         public DbSet<Location> Locations { get; set; }
 
+        /// <summary>
+        /// Function used to create the LocationContext in accordance with the objects listed within.
+        /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Location>().ToTable("Location");
