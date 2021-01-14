@@ -334,6 +334,32 @@
     }
 
     /*---------------------------*/
+    /* AR1_1 */
+    /*---------------------------*/
+
+    .divCenterAR1_1 {
+        height: 40px;
+        width: 150px;
+        position: absolute;
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        top: 85%;
+        left: 50%;
+    }
+
+    .printButtonMiddle {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        width: 150px;
+        height: 40px;
+        position: relative;
+    }
+
+    /*---------------------------*/
     /* Misc */
     /*---------------------------*/
     
