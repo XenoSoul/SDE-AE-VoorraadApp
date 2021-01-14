@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using SDE_AE_VoorraadApp.Models;
 
+// TODO: Documentation
 namespace SDE_AE_VoorraadApp.Data
 {
     public static class ListRequester
@@ -40,6 +40,7 @@ namespace SDE_AE_VoorraadApp.Data
                 Name = $"{DateTime.Now:dddd_dd-MM-yyyy_HH-mm-ss}_Filialen-{string.Join("", locations.ToArray()) }"
             });
             await context.SaveChangesAsync();
+
             OrderId = context.OrderLists.ToList().Last().ID;
             var orderList = productStockList.Select(productStock => new Order
             {
@@ -60,7 +61,6 @@ namespace SDE_AE_VoorraadApp.Data
                 context.Orders.ToList().FindAll(o => o.OrderListID == context.OrderLists.ToList().Last().ID), context);
         }
 
-        // TODO: Implement within frontend code
         public static List<DateTimeOrderList> RequestDateOrderLists(LocationContext context)
         {
             var datetimeOrderLists = new List<DateTimeOrderList>();
@@ -81,7 +81,6 @@ namespace SDE_AE_VoorraadApp.Data
             return datetimeOrderLists;
         }
 
-        // TODO: Implement within frontend code
         public static List<OrderLocationJoin> RequestDateOrderList(LocationContext context, int orderListId)
         {
             return CreateOrderLocationJoins(

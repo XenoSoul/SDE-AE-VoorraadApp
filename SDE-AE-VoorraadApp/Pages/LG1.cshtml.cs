@@ -16,10 +16,12 @@ namespace SDE_AE_VoorraadApp.Pages
     public class LG1Model : PageModel
     {
         private readonly LocationContext _context;
+        private readonly ILogger<LG1Model> _logger;
 
-        public LG1Model(LocationContext context)
+        public LG1Model(LocationContext context, ILogger<LG1Model> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -32,8 +34,7 @@ namespace SDE_AE_VoorraadApp.Pages
             // var result = await DbUpdater.TwinkUpdate(_context);
             /*if (result > 0)
             {
-                // TODO: Update Console.WriteLine to something in debug output
-                Console.WriteLine($"{result} lines were updated!!!");
+                _logger.LogInformation($"{result} lines were updated!!!");
             }*/
             Location = await _context.Locations.ToListAsync();
         }

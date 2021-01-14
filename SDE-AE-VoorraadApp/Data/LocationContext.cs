@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SDE_AE_VoorraadApp.Models;
 
+// TODO: Documentation
 namespace SDE_AE_VoorraadApp.Data
 {
     public class LocationContext : DbContext
