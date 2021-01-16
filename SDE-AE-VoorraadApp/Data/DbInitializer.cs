@@ -25,11 +25,8 @@ namespace SDE_AE_VoorraadApp.Data
         public static void Initialize(LocationContext context)
         {
             // Makes sure the database is there.
-            if (context.Locations.Any())
-            {
-                context.Database.EnsureCreated();
-                return;
-            }
+            context.Database.EnsureCreated();
+            context.SaveChanges();
 
             // Get all the Locations from the VendingWeb API.
             var locations = JsonSerializer.Deserialize<List<Location>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
