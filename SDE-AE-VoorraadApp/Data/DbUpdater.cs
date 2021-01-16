@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Timers;
 using RestSharp;
 using RestSharp.Authenticators;
 using SDE_AE_VoorraadApp.Models;
@@ -29,11 +30,12 @@ namespace SDE_AE_VoorraadApp.Data
         /// </returns>
         public static async Task<int> TwinkUpdate(LocationContext context)
         {
-            // Check if the database exists.
-            // If not initialize the database.
-            if (!context.Locations.Any())
+            // Check if it is the first time Twinkupdate is fired that day.
+            // AKA, is it the first time a list has been created that day?
+            // If so update the entire database through TwonkUpdate.
+            if (context.OrderLists.ToList().Find(ol => ol.DateTimeCreated.Date == DateTime.Now.Date) == null)
             {
-                DbInitializer.Initialize(context);
+                TwonkUpdate(context);
             }
 
             // Copy context as otherwise the code would throw a fit.
@@ -65,7 +67,7 @@ namespace SDE_AE_VoorraadApp.Data
         /// <param name="context">
         /// Context of the LocationContext Database.
         /// </param>
-        public static void TwonkUpdate(LocationContext context)
+        private static void TwonkUpdate(LocationContext context)
         {
             // Remove all elements from tables as context.TABLENAME.ToArray() are always all the elements in that table.
             context.ProductStocks.RemoveRange(context.ProductStocks.ToArray());

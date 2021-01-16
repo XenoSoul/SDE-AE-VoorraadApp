@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace SDE_AE_VoorraadApp.Data
 {
@@ -18,11 +16,7 @@ namespace SDE_AE_VoorraadApp.Data
                 EmailConfirmed = true
             };
 
-            var result = userManager.CreateAsync(user, "$Tr0NgPa55WorD!").Result;
-            if (!result.Succeeded)
-            {
-                Console.WriteLine("Something went Wrong");
-            }
+            userManager.CreateAsync(user, "$Tr0NgPa55WorD!");
         }
     }
 }

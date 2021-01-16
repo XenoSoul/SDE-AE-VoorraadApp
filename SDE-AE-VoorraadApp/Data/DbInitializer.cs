@@ -84,7 +84,7 @@ namespace SDE_AE_VoorraadApp.Data
                 // This is done by looking at the Latitude & Longitude and if they're the same add them to a list, of which we then take the total count.
                 // If this count is greater then 1 then the other duplicates get deleted (This is done in order to improve efficiency in runtime).
                 // The deletion of the duplicates is done an amount of times equal to the total amount of duplicates - 1.
-                var locationDupCount = locations.FindAll(x => Math.Abs(x.Latitude - _location.Latitude) < 1 && Math.Abs(x.Longitude - _location.Longitude) < 1).Count;
+                var locationDupCount = locations.FindAll(x => Math.Abs(x.Latitude - _location.Latitude) < 0.0001 && Math.Abs(x.Longitude - _location.Longitude) < 0.0001).Count;
                 if (locationDupCount <= 1) continue;
                 for (var i = 0; i < locationDupCount - 1; i++)
                 {
