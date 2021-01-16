@@ -34,24 +34,38 @@ namespace SDE_AE_VoorraadApp.Data
             // Get all the Locations from the VendingWeb API.
             var locations = JsonSerializer.Deserialize<List<Location>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
             // Filters out all the unique locations as Locations needs to be extracted from Machines.
-            locations = UniqueLocationsFilter(locations);
+            locations = UniqueLocationsFilter(locations).OrderBy(l => l.City).ToList();
             // Adds the locations to the Locations part of the database alphabetically ordered the city name
-            context.Locations.AddRange(locations.OrderBy(l => l.City));
+            if (context.Locations.Any())
+                context.Locations.AddRange(locations);
+            else
+                context.Locations.UpdateRange(locations);
             context.SaveChanges();
 
             // Get all the Categories from the VendingWeb API.
             var categories = JsonSerializer.Deserialize<List<Category>>(ApiRequester("products", "categories").Content) ?? throw new InvalidOperationException();
-            context.Categories.AddRange(categories);
+            if (context.Categories.Any())
+                context.Categories.UpdateRange(categories);
+            else
+                context.Categories.AddRange(categories);
             context.SaveChanges();
 
             // Get all the different Products from the VendingWeb API.
             var products = JsonSerializer.Deserialize<List<Product>>(ApiRequester("products", "").Content) ?? throw new InvalidOperationException();
-            context.Products.AddRange(DbProductCategoryLinker(products, context.Categories.ToList()));
+            var productList = DbProductCategoryLinker(products, context.Categories.ToList());
+            if (context.Products.Any())
+                context.Products.UpdateRange(productList);
+            else
+                context.Products.AddRange(productList);
             context.SaveChanges();
 
             // Get all the different Machines from the VendingWeb API.
             var machines = JsonSerializer.Deserialize<List<_Machine>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
-            context.Machines.AddRange(DbMachineLocationLinker(machines, context.Locations.ToList()));
+            var machineLocationLink = DbMachineLocationLinker(machines, context.Locations.ToList());
+            if (context.Machines.Any())
+                context.Machines.UpdateRange(machineLocationLink);
+            else
+                context.Machines.AddRange(machineLocationLink);
             context.SaveChanges();
 
             // Get all the indexes from all the machines to be used to update the machineIds of ProductStocks to avoid Reference exception.
@@ -60,7 +74,10 @@ namespace SDE_AE_VoorraadApp.Data
                 JsonSerializer.Deserialize<_ProductStock>(ApiRequester("machines/stock", $"{machineId}").Content) ??
                 throw new InvalidOperationException()).ToList();
             var productStocks = DbProductStockMachineProductLinker(_productStocks, context);
-            context.ProductStocks.AddRange(productStocks);
+            if (context.ProductStocks.Any())
+                context.ProductStocks.UpdateRange(productStocks);
+            else
+                context.ProductStocks.AddRange(productStocks);
             context.SaveChanges();
         }
 
@@ -118,7 +135,7 @@ namespace SDE_AE_VoorraadApp.Data
             var legitMachines = new List<Machine>();
             foreach (var machine in machines.ToList())
             {
-                machine.LocationID = locations.Find(x => Math.Abs(x.Latitude - machine.Latitude) < 1 && Math.Abs(x.Longitude - machine.Longitude) < 1).ID;
+                machine.LocationID = locations.Find(x => Math.Abs(x.Latitude - machine.Latitude) < 0.0001 && Math.Abs(x.Longitude - machine.Longitude) < 0.0001).ID;
                 legitMachines.Add(new Machine { ID = 0, LocationID = machine.LocationID, MachineId = machine.MachineID, Name = machine.Name });
             }
 

@@ -35,7 +35,7 @@ namespace SDE_AE_VoorraadApp.Data
             // If so update the entire database through TwonkUpdate.
             if (context.OrderLists.ToList().Find(ol => ol.DateTimeCreated.Date == DateTime.Now.Date) == null)
             {
-                TwonkUpdate(context);
+                DbInitializer.Initialize(context);
             }
 
             // Copy context as otherwise the code would throw a fit.
@@ -59,30 +59,6 @@ namespace SDE_AE_VoorraadApp.Data
             
             // Save the made changes and return the number of rows affected by the TwinkUpdate.
             return await context.SaveChangesAsync();
-        }
-
-        /// <summary>
-        /// Removes all the elements in the LocationContext Database and fires the DbInitializer.Initialize function in order to repopulate them.
-        /// </summary>
-        /// <param name="context">
-        /// Context of the LocationContext Database.
-        /// </param>
-        private static void TwonkUpdate(LocationContext context)
-        {
-            // Remove all elements from tables as context.TABLENAME.ToArray() are always all the elements in that table.
-            context.ProductStocks.RemoveRange(context.ProductStocks.ToArray());
-            context.SaveChanges();
-            context.Products.RemoveRange(context.Products.ToArray());
-            context.SaveChanges();
-            context.Categories.RemoveRange(context.Categories.ToArray());
-            context.SaveChanges();
-            context.Machines.RemoveRange(context.Machines.ToArray());
-            context.SaveChanges();
-            context.Locations.RemoveRange(context.Locations.ToArray());
-            context.SaveChanges();
-
-            // Reinitialize the Database
-            DbInitializer.Initialize(context);
         }
 
         /// <summary>
