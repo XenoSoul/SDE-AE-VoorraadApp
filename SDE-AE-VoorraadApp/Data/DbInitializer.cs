@@ -56,9 +56,9 @@ namespace SDE_AE_VoorraadApp.Data
                 JsonSerializer.Deserialize<_ProductStock>(ApiRequester("machines/stock", $"{machineId}").Content) ??
                 throw new InvalidOperationException()).ToList();
             var productStocks = DbProductStockMachineProductLinker(_productStocks, context);
-            if (context.ProductStocks.Any())
+            /*if (context.ProductStocks.Any())
                 context.ProductStocks.UpdateRange(productStocks);
-            else
+            else*/
                 context.ProductStocks.AddRange(productStocks);
             context.SaveChanges();
         }

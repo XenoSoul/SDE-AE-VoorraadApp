@@ -33,10 +33,10 @@ namespace SDE_AE_VoorraadApp.Data
             // Check if it is the first time Twinkupdate is fired that day.
             // AKA, is it the first time a list has been created that day?
             // If so update the entire database through TwonkUpdate.
-            if (context.OrderLists.ToList().Any())
+            /*if (context.OrderLists.ToList().Any())
             {
                 DbInitializer.Initialize(context);
-            }
+            }*/
 
             // Copy context as otherwise the code would throw a fit.
             var _context = context;
