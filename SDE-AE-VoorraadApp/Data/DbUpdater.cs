@@ -33,7 +33,7 @@ namespace SDE_AE_VoorraadApp.Data
             // Check if it is the first time Twinkupdate is fired that day.
             // AKA, is it the first time a list has been created that day?
             // If so update the entire database through TwonkUpdate.
-            if (context.OrderLists.ToList().Find(ol => ol.DateTimeCreated.Date == DateTime.Now.Date) == null)
+            if (context.OrderLists.ToList().Any())
             {
                 DbInitializer.Initialize(context);
             }

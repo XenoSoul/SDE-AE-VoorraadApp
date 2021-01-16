@@ -27,45 +27,27 @@ namespace SDE_AE_VoorraadApp.Data
             // Makes sure the database is there.
             context.Database.EnsureCreated();
 
-            // Checks if the database is already seeded.
-            if (context.Locations.Any())
-                return;
-
             // Get all the Locations from the VendingWeb API.
             var locations = JsonSerializer.Deserialize<List<Location>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
             // Filters out all the unique locations as Locations needs to be extracted from Machines.
-            locations = UniqueLocationsFilter(locations).OrderBy(l => l.City).ToList();
+            locations = UniqueLocationsFilter(locations);
             // Adds the locations to the Locations part of the database alphabetically ordered the city name
-            if (context.Locations.Any())
-                context.Locations.AddRange(locations);
-            else
-                context.Locations.UpdateRange(locations);
+            context.Locations.AddRange(locations.OrderBy(l => l.City));
             context.SaveChanges();
 
             // Get all the Categories from the VendingWeb API.
             var categories = JsonSerializer.Deserialize<List<Category>>(ApiRequester("products", "categories").Content) ?? throw new InvalidOperationException();
-            if (context.Categories.Any())
-                context.Categories.UpdateRange(categories);
-            else
-                context.Categories.AddRange(categories);
+            context.Categories.AddRange(categories);
             context.SaveChanges();
 
             // Get all the different Products from the VendingWeb API.
             var products = JsonSerializer.Deserialize<List<Product>>(ApiRequester("products", "").Content) ?? throw new InvalidOperationException();
-            var productList = DbProductCategoryLinker(products, context.Categories.ToList());
-            if (context.Products.Any())
-                context.Products.UpdateRange(productList);
-            else
-                context.Products.AddRange(productList);
+            context.Products.AddRange(DbProductCategoryLinker(products, context.Categories.ToList()));
             context.SaveChanges();
 
             // Get all the different Machines from the VendingWeb API.
             var machines = JsonSerializer.Deserialize<List<_Machine>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
-            var machineLocationLink = DbMachineLocationLinker(machines, context.Locations.ToList());
-            if (context.Machines.Any())
-                context.Machines.UpdateRange(machineLocationLink);
-            else
-                context.Machines.AddRange(machineLocationLink);
+            context.Machines.AddRange(DbMachineLocationLinker(machines, context.Locations.ToList()));
             context.SaveChanges();
 
             // Get all the indexes from all the machines to be used to update the machineIds of ProductStocks to avoid Reference exception.
