@@ -1,19 +1,11 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 
 namespace SDE_AE_VoorraadApp.Pages
 {
+    /// <summary>
+    /// The AB1Model handler is a handler that was crated as a dummy item for something that we intended to implement if we had the time for it
+    /// Being that we never did, this never came up.
+    /// </summary>
     public class AB1Model : PageModel
     {
         public void OnGet()

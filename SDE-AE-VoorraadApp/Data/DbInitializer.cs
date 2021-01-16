@@ -27,10 +27,6 @@ namespace SDE_AE_VoorraadApp.Data
             // Makes sure the database is there.
             context.Database.EnsureCreated();
 
-            // Checks if the database is already seeded.
-            if (context.Locations.Any())
-                return;
-
             // Get all the Locations from the VendingWeb API.
             var locations = JsonSerializer.Deserialize<List<Location>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
             // Filters out all the unique locations as Locations needs to be extracted from Machines.
@@ -60,7 +56,10 @@ namespace SDE_AE_VoorraadApp.Data
                 JsonSerializer.Deserialize<_ProductStock>(ApiRequester("machines/stock", $"{machineId}").Content) ??
                 throw new InvalidOperationException()).ToList();
             var productStocks = DbProductStockMachineProductLinker(_productStocks, context);
-            context.ProductStocks.AddRange(productStocks);
+            /*if (context.ProductStocks.Any())
+                context.ProductStocks.UpdateRange(productStocks);
+            else*/
+                context.ProductStocks.AddRange(productStocks);
             context.SaveChanges();
         }
 
@@ -84,7 +83,7 @@ namespace SDE_AE_VoorraadApp.Data
                 // This is done by looking at the Latitude & Longitude and if they're the same add them to a list, of which we then take the total count.
                 // If this count is greater then 1 then the other duplicates get deleted (This is done in order to improve efficiency in runtime).
                 // The deletion of the duplicates is done an amount of times equal to the total amount of duplicates - 1.
-                var locationDupCount = locations.FindAll(x => Math.Abs(x.Latitude - _location.Latitude) < 1 && Math.Abs(x.Longitude - _location.Longitude) < 1).Count;
+                var locationDupCount = locations.FindAll(x => Math.Abs(x.Latitude - _location.Latitude) < 0.0001 && Math.Abs(x.Longitude - _location.Longitude) < 0.0001).Count;
                 if (locationDupCount <= 1) continue;
                 for (var i = 0; i < locationDupCount - 1; i++)
                 {
@@ -118,7 +117,7 @@ namespace SDE_AE_VoorraadApp.Data
             var legitMachines = new List<Machine>();
             foreach (var machine in machines.ToList())
             {
-                machine.LocationID = locations.Find(x => Math.Abs(x.Latitude - machine.Latitude) < 1 && Math.Abs(x.Longitude - machine.Longitude) < 1).ID;
+                machine.LocationID = locations.Find(x => Math.Abs(x.Latitude - machine.Latitude) < 0.0001 && Math.Abs(x.Longitude - machine.Longitude) < 0.0001).ID;
                 legitMachines.Add(new Machine { ID = 0, LocationID = machine.LocationID, MachineId = machine.MachineID, Name = machine.Name });
             }
 
@@ -162,7 +161,7 @@ namespace SDE_AE_VoorraadApp.Data
         /// Context of the LocationContext Database.
         /// </param>
         /// <returns>
-        /// A list of ProductStock with correct Ids
+        /// A list of ProductStock with correct Ids.
         /// </returns>
         private static List<ProductStock> DbProductStockMachineProductLinker(List<_ProductStock> productStocks, LocationContext context)
         {

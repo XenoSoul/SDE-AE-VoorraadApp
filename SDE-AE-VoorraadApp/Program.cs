@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using SDE_AE_VoorraadApp.Data;
 
@@ -29,8 +25,8 @@ namespace SDE_AE_VoorraadApp
             try
             {
                 var contextLocationContext = services.GetRequiredService<LocationContext>();
-                // contextLocationContext.Database.EnsureCreated();
                 DbInitializer.Initialize(contextLocationContext);
+
                 var contextLoginContext = services.GetRequiredService<LoginContext>();
                 contextLoginContext.Database.EnsureCreated();
             }

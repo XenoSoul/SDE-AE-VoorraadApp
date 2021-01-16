@@ -11,6 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace SDE_AE_VoorraadApp.Pages
 {
+    /// <summary>
+    /// The handler of the Login page.
+    /// </summary>
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
@@ -18,15 +21,16 @@ namespace SDE_AE_VoorraadApp.Pages
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager,
-            ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
 
+        /// <summary>
+        /// The variable that the user's input will be saved in in the event of a Post request.
+        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
@@ -37,6 +41,9 @@ namespace SDE_AE_VoorraadApp.Pages
         [TempData]
         public string ErrorMessage { get; set; }
 
+        /// <summary>
+        /// An object class representing the input of hte user.
+        /// </summary>
         public class InputModel
         {
             [Required]
@@ -51,6 +58,15 @@ namespace SDE_AE_VoorraadApp.Pages
             public bool RememberMe { get; set; }
         }
 
+        /// <summary>
+        /// Sets the ReturnUrl as well as clearing any any cookies that might be saved on the user's browser .
+        /// </summary>
+        /// <param name="returnUrl">
+        /// The URL the user was on before navigating to this page.
+        /// </param>
+        /// <returns>
+        /// <see cref="Task"/>.
+        /// </returns>
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
@@ -68,6 +84,12 @@ namespace SDE_AE_VoorraadApp.Pages
             ReturnUrl = returnUrl;
         }
 
+        /// <summary>
+        /// The function that handles the Form Post request from the login function.
+        /// </summary>
+        /// <param name="returnUrl">
+        /// The URL the user was on before navigating to this page.
+        /// </param>
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -75,15 +97,19 @@ namespace SDE_AE_VoorraadApp.Pages
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (!ModelState.IsValid) return Page();
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+            // This doesn't count login failures towards account lockout.
+            // To enable password failures to trigger account lockout, set lockoutOnFailure: true.
+
+            // Check if the user is in the in the list of users, if so result is true.
             var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
                 return LocalRedirect(returnUrl);
             }
-            if (result.RequiresTwoFactor)
+
+            // A part of the code that can be activate at any time if the functionality for 2 factor authentication is implemented.
+            /*if (result.RequiresTwoFactor)
             {
                 return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
             }
@@ -91,11 +117,9 @@ namespace SDE_AE_VoorraadApp.Pages
             {
                 _logger.LogWarning("User account locked out.");
                 return RedirectToPage("./Lockout");
-            }
+            }*/
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
-
-            // If we got this far, something failed, redisplay form
         }
     }
 }

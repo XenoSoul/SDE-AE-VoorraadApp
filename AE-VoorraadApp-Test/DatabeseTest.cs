@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text.Json.Serialization;
 using NUnit.Framework;
 using RestSharp;
@@ -11,11 +10,12 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace AE_VoorraadApp_Test
 {
-    public class Tests
+    public class DatabaseTest
     {
         [SetUp]
         public void Setup()
         {
+
         }
 
         private class Location
@@ -44,7 +44,6 @@ namespace AE_VoorraadApp_Test
         {
             public int MachineId { get; set; }
             public List<ProductStock> ProductStock { get; set; }
-
         }
 
         [Test]
@@ -59,10 +58,6 @@ namespace AE_VoorraadApp_Test
             actualList = UniqueLocationsFilter(actualList);
 
             Assert.AreEqual(6, actualList.Count);
-            /*var expect = new Client() {Id = 80, Name = "Appeltje-Eitje"};
-
-            Assert.AreEqual( expect.Id, actual.Id);
-            Assert.AreEqual( expect.Name, actual.Name);*/
         }
 
         [Test]
@@ -77,12 +72,6 @@ namespace AE_VoorraadApp_Test
             actualList = UniqueLocationsFilter(actualList);
 
             Assert.AreEqual(6, actualList.Count);
-            /*var expect = new Client() {Id = 80, Name = "Appeltje-Eitje"};
-
-            Assert.AreEqual( expect.Id, actual.Id);
-            Assert.AreEqual( expect.Name, actual.Name);
-            JsonSerializer.Deserialize<_ProductStock>(ApiRequester("stock", $"{machineId}").Content) ?? throw new InvalidOperationException()
-             */
         }
 
         [Test]
@@ -93,12 +82,6 @@ namespace AE_VoorraadApp_Test
             var actual = JsonSerializer.Deserialize<_ProductStock>(content) ?? throw new InvalidOperationException();
 
             Assert.AreEqual(6483, actual.MachineId);
-            /*var expect = new Client() {Id = 80, Name = "Appeltje-Eitje"};
-
-            Assert.AreEqual( expect.Id, actual.Id);
-            Assert.AreEqual( expect.Name, actual.Name);
-            JsonSerializer.Deserialize<_ProductStock>(ApiRequester("stock", $"{machineId}").Content) ?? throw new InvalidOperationException()
-             */
         }
 
         private static List<Location> UniqueLocationsFilter(List<Location> locations)

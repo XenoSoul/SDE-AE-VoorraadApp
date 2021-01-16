@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Timers;
 using RestSharp;
 using RestSharp.Authenticators;
 using SDE_AE_VoorraadApp.Models;
 
-// TODO: Documentation
 namespace SDE_AE_VoorraadApp.Data
 {
     /// <summary>
-    /// 
+    /// The DbUpdater class.
+    /// Contains methods used for updating The LocationContext.
     /// </summary>
+    /// <remarks>
+    /// This Class can both update the amounts of products available as well as the the whole LocationContext Database (with help of DbInitializer).
+    /// </remarks>
     public static class DbUpdater
     {
         /// <summary>
@@ -26,12 +30,13 @@ namespace SDE_AE_VoorraadApp.Data
         /// </returns>
         public static async Task<int> TwinkUpdate(LocationContext context)
         {
-            // Check if the database exists.
-            // If not initialize the database.
-            if (!context.Locations.Any())
+            // Check if it is the first time Twinkupdate is fired that day.
+            // AKA, is it the first time a list has been created that day?
+            // If so update the entire database through TwonkUpdate.
+            /*if (context.OrderLists.ToList().Any())
             {
                 DbInitializer.Initialize(context);
-            }
+            }*/
 
             // Copy context as otherwise the code would throw a fit.
             var _context = context;
@@ -54,30 +59,6 @@ namespace SDE_AE_VoorraadApp.Data
             
             // Save the made changes and return the number of rows affected by the TwinkUpdate.
             return await context.SaveChangesAsync();
-        }
-
-        /// <summary>
-        /// Removes all the elements in the LocationContext Database and fires the DbInitializer.Initialize function in order to repopulate them.
-        /// </summary>
-        /// <param name="context">
-        /// Context of the LocationContext Database.
-        /// </param>
-        public static void TwonkUpdate(LocationContext context)
-        {
-            // Remove all elements from tables as context.TABLENAME.ToArray() are always all the elements in that table.
-            context.ProductStocks.RemoveRange(context.ProductStocks.ToArray());
-            context.SaveChanges();
-            context.Products.RemoveRange(context.Products.ToArray());
-            context.SaveChanges();
-            context.Categories.RemoveRange(context.Categories.ToArray());
-            context.SaveChanges();
-            context.Machines.RemoveRange(context.Machines.ToArray());
-            context.SaveChanges();
-            context.Locations.RemoveRange(context.Locations.ToArray());
-            context.SaveChanges();
-
-            // Reinitialize the Database
-            DbInitializer.Initialize(context);
         }
 
         /// <summary>
@@ -123,40 +104,59 @@ namespace SDE_AE_VoorraadApp.Data
         }
 
         /// <summary>
-        /// 
+        /// AsyncApiRequester asynchronously requests the VendingWebAPI.
+        /// <para>Much like the ApiRequester this function requests the VendingWebAPI in order to get the data required to build the LocationContext Database.</para>
+        /// <para>The difference however is that this function works asynchronously.</para>
         /// </summary>
         /// <param name="header">
-        ///
+        /// Divines what part of the API it will request data from.
         /// </param>
         /// <param name="subheader">
-        ///
+        /// Details which part of the API within the header is queried. 
         /// </param>
         /// <returns>
-        ///
+        /// A GET request Task IRestResponse.
         /// </returns>
         private static async Task<IRestResponse> AsyncApiRequester(string header, string subheader)
         {
+            // Setting up the client that the function will send a request to.
+            // It does this by taking the header input and setting that as the RestClient.
             var client = new RestClient($"https://api-staging-vendingweb.azurewebsites.net/api/external/{header}/")
             {
+                // Although not particularly safe the Authenticator of the Client gets gets divined here in order to be able to access the API.
                 Authenticator = new HttpBasicAuthenticator("AppelEitjeTest", "appeleitje@!78")
             };
 
+            // Set up the request that will be send.
+            // Here the return DataFormat also gets defined, being JSON in this case.
             var request = new RestRequest($"{subheader}", DataFormat.Json);
 
+            // Send the actual GET request and return the outcome.
             return await client.ExecuteGetAsync(request);
         }
 
         /// <summary>
-        /// 
+        /// AsyncDbProductStockMachineProductLinker changes the ProductId and MachineId from the List of _ProductStock in order to update them to their correct values.
+        /// After having done so AsyncDbProductStockMachineProductLinker returns a Task list of ProductStock with the correct values.
         /// </summary>
-        /// <param name="productStocks"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
+        /// <param name="productStocks">
+        /// A list of Task _ProductStock with to be updated ProductId and MachineId.
+        /// </param>
+        /// <param name="context">
+        /// Context of the LocationContext Database.
+        /// </param>
+        /// <returns>
+        /// A Task list of ProductStock with correct Ids.
+        /// </returns>
         private static async Task<List<ProductStock>> AsyncDbProductStockMachineProductLinker(List<Task<DbInitializer._ProductStock>> productStocks, LocationContext context)
         {
+            // Setup two variables so that they won't constantly be called while looping over productStocks.
             var products = context.Products.ToList();
             var machines = context.Machines.ToList();
 
+            // Instead of being able to do this in a LINQ function like in the non async version of this function we have to resolve creating the list with a foreach loop instead.
+            // This is done by looping over the productStocks and from those awaiting their result (as they were created asynchronously).
+            // After this they add the items to the list with the correct ProductId and MachineId.
             var list = new List<ProductStock>();
             foreach (var result in productStocks.ToList())
             {
@@ -173,6 +173,7 @@ namespace SDE_AE_VoorraadApp.Data
                 }));
             }
             
+            // Return the correct list of ProductStock.
             return list;
         }
     }
