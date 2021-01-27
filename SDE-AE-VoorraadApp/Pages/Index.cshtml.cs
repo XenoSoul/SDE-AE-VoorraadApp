@@ -14,8 +14,8 @@ namespace SDE_AE_VoorraadApp.Pages
     [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<IndexModel> _logger;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
         public IndexModel(SignInManager<IdentityUser> signInManager, ILogger<IndexModel> logger)
         {

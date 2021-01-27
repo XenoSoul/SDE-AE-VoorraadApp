@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +21,12 @@ namespace SDE_AE_VoorraadApp.Pages
     {
         private readonly LocationContext _context;
         private readonly ILogger<LG1Model> _logger;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public LG1Model(LocationContext context, ILogger<LG1Model> logger)
+        public LG1Model(SignInManager<IdentityUser> signInManager, ILogger<LG1Model> logger, LocationContext context)
         {
             _context = context;
+            _signInManager = signInManager;
             _logger = logger;
         }
 

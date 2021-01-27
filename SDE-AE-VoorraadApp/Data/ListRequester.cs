@@ -41,7 +41,7 @@ namespace SDE_AE_VoorraadApp.Data
             // This is important because you would not want to create a list with the same products if those items have yet to be delivered.
             // As such, when finding the different ProductStocks to turn into orders the amount is subtracted equal to the amount on the orderlist created less then 30 minutes ago.
             var sa = context.OrderLists.ToList()
-                .Find(ol => DateTime.Now.Subtract(ol.DateTimeCreated) < new TimeSpan(0, 30, 0));
+                .Find(ol => DateTime.Now.Subtract(ol.DateTimeCreated) <  TimeSpan.FromMinutes(30));
             var productStockList = new List<ProductStock>();
             foreach (var machine in machineList)
             {

@@ -48,16 +48,22 @@
                 <div id="printList">
                     @foreach (var item in Model.OrderLocationJoin)
                     {
-                        <div>
-                            @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br>---------------------------------------------------------------<br>
-                            @foreach (var order in item.Orders)
-                            {
-                                @Html.DisplayFor(modelItem => order.ProductStock.Product.Name)
-                                <text> - </text>
-                                @Html.DisplayFor(modelItem => order.Quantity)<br>
-                            }
-                            <br><br>
-                        </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br>
+                        ---------------------------------------------------------------<br>
+                        Naam - Vuladvies - Voorraad - Max<br>
+                        @foreach (var order in item.Orders)
+                        {
+                            @Html.DisplayFor(modelItem => order.ProductStock.Product.Name)
+                            <text> - </text>
+                            @Html.DisplayFor(modelItem => order.Quantity)
+                            <text> - </text>
+                            @Html.DisplayFor(modelItem => order.ProductStock.AvailableCount)
+                            <text> - </text>
+                            @Html.DisplayFor(modelItem => order.ProductStock.MaxCount)<br>
+                        }
+                        <br><br>
+                    </div>
                     }
                     <br>
                     Rijroute:<br>

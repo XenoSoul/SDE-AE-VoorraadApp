@@ -25,6 +25,7 @@ namespace SDE_AE_VoorraadApp
             try
             {
                 var contextLocationContext = services.GetRequiredService<LocationContext>();
+
                 DbInitializer.Initialize(contextLocationContext);
 
                 var contextLoginContext = services.GetRequiredService<LoginContext>();

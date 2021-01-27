@@ -27,11 +27,14 @@ namespace SDE_AE_VoorraadApp.Data
             // Makes sure the database is there.
             context.Database.EnsureCreated();
 
+            if (context.Locations.Any())
+                return;
+
             // Get all the Locations from the VendingWeb API.
             var locations = JsonSerializer.Deserialize<List<Location>>(ApiRequester("machines", "").Content) ?? throw new InvalidOperationException();
             // Filters out all the unique locations as Locations needs to be extracted from Machines.
             locations = UniqueLocationsFilter(locations);
-            // Adds the locations to the Locations part of the database alphabetically ordered the city name
+            // Adds the locations to the Locations part of the database alphabetically ordered the city name.
             context.Locations.AddRange(locations.OrderBy(l => l.City));
             context.SaveChanges();
 
