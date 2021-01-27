@@ -35,23 +35,38 @@
         <img src="~/Logo-AE.png" alt="Logo Appeltje Eitje Automaten" class="aeLogo">
     </div>
 
-    <div class="listBorder">
-        <div>
-            @foreach (var item in Model.OrderLocationJoin)
-            {
-            <div class="archiveDateTitle">
-                @Html.DisplayFor(modelItem => item.Day.Date)<br>--------------------------------------------<br>
-                @foreach (var orderList in item.OrderLists)
+    <div>
+        <script type="text/javascript">
+            document.getElementById("dateInput").addEventListener("change", function () {
+                var input = this.value;
+                var dateEntered = new Date(input);
+                console.log(input); //e.g. 2015-11-13
+                console.log(dateEntered); //e.g. Fri Nov 13 2015 00:00:00 GMT+0000 (GMT Standard Time)
+            });
+        </script>
+
+        <div class="dateSelector">
+            <input type="date">
+        </div>
+
+        <div class="listBorder">
+            <div>
+                @foreach (var item in Model.OrderLocationJoin)
                 {
-                    <div>
-                        <form asp-page="AR1" method="POST">
-                            <button asp-for class="invisButton" name="orderListIDAR1" value="@Html.DisplayFor(modelItem=>orderList.ID)">@Html.DisplayFor(modelItem => orderList.Name)</button><br>
-                        </form>
+                    <div class="archiveDateTitle">
+                        @Html.DisplayFor(modelItem => item.Day.Date)<br>--------------------------------------------<br>
+                        @foreach (var orderList in item.OrderLists)
+                        {
+                            <div>
+                                <form asp-page="AR1" method="POST">
+                                    <button asp-for class="invisButton" name="orderListIDAR1" value="@Html.DisplayFor(modelItem => orderList.ID)">@Html.DisplayFor(modelItem => orderList.Name)</button><br>
+                                </form>
+                            </div>
+                        }
+                        <br><br>
                     </div>
                 }
-                <br><br>
             </div>
-            }
         </div>
     </div>
 </body>

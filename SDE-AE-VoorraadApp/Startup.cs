@@ -56,7 +56,7 @@ namespace SDE_AE_VoorraadApp
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 
                 options.LoginPath = "/Login";
                 // options.AccessDeniedPath = "/Identity/Account/AccessDenied";

@@ -61,6 +61,11 @@ namespace SDE_AE_VoorraadApp.Data
             return await context.SaveChangesAsync();
         }
 
+        /*public static async Task<int> TwonkUpdate()
+        {
+
+        }*/
+
         /// <summary>
         /// AsyncDbProductStockMachineProductLinkerWrapper exists to asynchronously transform a list of Task DbInitializer._ProductStocks into a Task&lt;List&lt;ProductStock&gt;&gt;.
         /// <para>The primary purpose of this function is to be used in the TwinkUpdate function so that it can asynchronously update the required fields in ProductStock.</para>

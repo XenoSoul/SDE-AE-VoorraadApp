@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using SDE_AE_VoorraadApp.Data;
 
 namespace SDE_AE_VoorraadApp.Pages
@@ -17,10 +19,14 @@ namespace SDE_AE_VoorraadApp.Pages
         /// Contains the context of the <see cref="LocationContext"/> Database.
         /// </summary>
         private readonly LocationContext _context;
+        private readonly ILogger<AR1Model> _logger;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AR1Model(LocationContext context)
+        public AR1Model(SignInManager<IdentityUser> signInManager, ILogger<AR1Model> logger, LocationContext context)
         {
             _context = context;
+            _signInManager = signInManager;
+            _logger = logger;
         }
 
         public List<ListRequester.DateTimeOrderList> OrderLocationJoin { get; private set; }
