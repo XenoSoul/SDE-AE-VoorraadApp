@@ -54,13 +54,13 @@
                         Naam - Vuladvies - Voorraad - Max<br>
                         @foreach (var order in item.Orders)
                         {
-                            @Html.DisplayFor(modelItem => order.ProductStock.Product.Name)
+                            @Html.DisplayFor(modelItem => order.ProductName)
                             <text> - </text>
                             @Html.DisplayFor(modelItem => order.Quantity)
                             <text> - </text>
-                            @Html.DisplayFor(modelItem => order.ProductStock.AvailableCount)
+                            @Html.DisplayFor(modelItem => order.SnapAvailableCount)
                             <text> - </text>
-                            @Html.DisplayFor(modelItem => order.ProductStock.MaxCount)<br>
+                            @Html.DisplayFor(modelItem => order.SnapMaxCount)<br>
                         }
                         <br><br>
                     </div>

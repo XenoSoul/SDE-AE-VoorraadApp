@@ -43,14 +43,14 @@ namespace SDE_AE_VoorraadApp.Data
             var sa = context.OrderLists.ToList()
                 .Find(ol => DateTime.Now.Subtract(ol.DateTimeCreated) <  TimeSpan.FromMinutes(30));
             var productStockList = new List<ProductStock>();
-            foreach (var machine in machineList)
+            /*foreach (var machine in machineList)
             {
                 productStockList.AddRange(context.ProductStocks.ToList().FindAll(ps =>
                     ps.MachineId == machine.ID && ps.RefillAdviceCount -
                     (sa != null && context.Orders.ToList().Find(o => o.ProductStockID == ps.ID) != null
                         ? context.Orders.ToList().Find(o => o.ProductStockID.Equals(ps.ID)).Quantity
                         : 0) > 0));
-            }
+            }*/
 
             // Check if the total amount of ProductStock to be turned into orders is 0.
             // If so the rest of this function does not need to be executed as there would be nothing to save.
@@ -75,7 +75,13 @@ namespace SDE_AE_VoorraadApp.Data
             var orderId = context.OrderLists.ToList().Last().ID;
             var orderList = productStockList.Select(productStock => new Order
             {
-                ProductStockID = productStock.ID, Quantity = productStock.RefillAdviceCount,
+                Quantity = productStock.RefillAdviceCount,
+                LocationID = productStock.Machine.LocationID,
+                ProductName = productStock.Product.Name, // TODO: Check if works.
+                SnapRefillAdviceCount = productStock.RefillAdviceCount,
+                SnapAvailableCount = productStock.AvailableCount,
+                SnapMaxCount = productStock.MaxCount,
+
                 Priority = Math.Abs((float)productStock.RefillAdviceCount / productStock.MaxCount * 100f - 100f) < 1
                     ? 1000f
                     : (float)productStock.RefillAdviceCount / productStock.MaxCount * 100f,
@@ -172,17 +178,17 @@ namespace SDE_AE_VoorraadApp.Data
         /// </returns>
         private static List<OrderLocationJoin> CreateOrderLocationJoins(List<Order> orders, LocationContext context)
         {
-            // This function links together first ProductStock with Orders, then Machines with ProductStock, and then finally Products with ProductStock.
+            /*// This function links together first ProductStock with Orders, then Machines with ProductStock, and then finally Products with ProductStock.
             // This is done in order to assure that every data type is linked to one another to be returned.
             // The product link particularly is there to facilitate the display of the names of the products from Productstock, wherever the user might need it.
             var recentProductStocks = orders.Select(order => context.ProductStocks.ToList().Find(ps => ps.ID == order.ProductStockID)).ToList();
             var recentMachines = recentProductStocks.Select(productStock => context.Machines.ToList().Find(m => m.ID == productStock.MachineId)).ToList();
-            var recentProducts = recentProductStocks.Select(productStock => context.Products.ToList().Find(p => p.ID == productStock.ProductId)).ToList();
+            var recentProducts = recentProductStocks.Select(productStock => context.Products.ToList().Find(p => p.ID == productStock.ProductId)).ToList();*/
 
             // After these links have been established the established links get used in LINQ function that creates a
             // OrderLocationJoin object for every location that might be included in the list of orders.
             return (from location in context.Locations.ToList()
-                let allOrdersLocation = orders.FindAll(o => o.ProductStock.Machine.LocationID == location.ID)
+                let allOrdersLocation = orders.FindAll(o => o.LocationID == location.ID)
                 where allOrdersLocation.Count != 0
                 let allOrdersPriority = allOrdersLocation.Sum(o => o.Priority)
                 select new OrderLocationJoin { Orders = allOrdersLocation, Location = location, Priority = allOrdersPriority }).ToList();
