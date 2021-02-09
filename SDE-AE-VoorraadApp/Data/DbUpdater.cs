@@ -61,10 +61,175 @@ namespace SDE_AE_VoorraadApp.Data
             return await context.SaveChangesAsync();
         }
 
-        /*public static async Task<int> TwonkUpdate()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context">
+        ///
+        /// </param>
+        /// <returns>
+        ///
+        /// </returns>
+        public static async Task<int> TwonkUpdate(LocationContext context)
         {
+            //
+            var currentMachines = AsyncApiRequester("machines", "");
 
-        }*/
+            //
+            var oldLocations = context.Locations.ToList();
+            var newLocations = DbInitializer
+                .UniqueLocationsFilter(JsonSerializer.Deserialize<List<Location>>((await currentMachines).Content))
+                .OrderBy(l => l.City).ToList();
+
+            oldLocations = CheckListLengthDbObjects(oldLocations, newLocations);
+
+            for (var i = 0; i < newLocations.Count; i++)
+            {
+                oldLocations[i].Place = newLocations[i].Place;
+                oldLocations[i].Latitude = newLocations[i].Latitude;
+                oldLocations[i].Longitude = newLocations[i].Longitude;
+                oldLocations[i].City = newLocations[i].City;
+                oldLocations[i].Country = newLocations[i].Country;
+            }
+
+            context.Locations.UpdateRange(oldLocations);
+            await context.SaveChangesAsync();
+
+            //
+            var oldMachines = context.Machines.ToList();
+            var new_Machines =
+                JsonSerializer.Deserialize<List<DbInitializer._Machine>>((await currentMachines).Content) ??
+                throw new InvalidOperationException();
+            var newMachines = DbInitializer.DbMachineLocationLinker(new_Machines, context.Locations.ToList());
+
+            oldMachines = CheckListLengthDbObjects(oldMachines, newMachines);
+
+            for (var i = 0; i < newMachines.Count; i++)
+            {
+                oldMachines[i].MachineId = newMachines[i].MachineId;
+                oldMachines[i].Name = newMachines[i].Name;
+                oldMachines[i].LocationID = newMachines[i].LocationID;
+            }
+
+            context.Machines.UpdateRange(oldMachines);
+            await context.SaveChangesAsync();
+
+            //
+            var oldCategories = context.Categories.ToList();
+            var newCategories =
+                JsonSerializer.Deserialize<List<Category>>((await AsyncApiRequester("products", "categories"))
+                    .Content) ?? throw new InvalidOperationException();
+            oldCategories = CheckListLengthDbObjects(oldCategories, newCategories);
+
+            for (var i = 0; i < newCategories.Count; i++)
+            {
+                oldCategories[i].CategoryID = newCategories[i].CategoryID;
+                oldCategories[i].Name = newCategories[i].Name;
+            }
+
+            context.Categories.UpdateRange(oldCategories);
+            await context.SaveChangesAsync();
+
+            //
+            var oldProducts = context.Products.ToList();
+            var newProducts =
+                DbInitializer.DbProductCategoryLinker(JsonSerializer.Deserialize<List<Product>>(
+                    (await AsyncApiRequester("products", ""))
+                    .Content) ?? throw new InvalidOperationException(), oldCategories);
+            oldProducts = CheckListLengthDbObjects(oldProducts, newProducts);
+            for (var i = 0; i < newProducts.Count; i++)
+            {
+                oldProducts[i].ProductId = newProducts[i].ProductId;
+                oldProducts[i].CategoryId = newProducts[i].CategoryId;
+                oldProducts[i].Name = newProducts[i].Name;
+                oldProducts[i].SkuCode = newProducts[i].SkuCode;
+            }
+
+            context.Products.UpdateRange(oldProducts);
+            await context.SaveChangesAsync();
+
+            // 
+            var allMachineIds = oldMachines.Select(m => m.MachineId).ToArray();
+            var _productStocks = allMachineIds.Select(async machineId =>
+                JsonSerializer.Deserialize<DbInitializer._ProductStock>(
+                    (await AsyncApiRequester("machines/stock", $"{machineId}")).Content) ??
+                throw new InvalidOperationException()).ToList();
+            var newProductStock = await AsyncDbFullProductStockMachineProductLinkerWrapper(_productStocks, context);
+
+            context.ProductStocks.UpdateRange(newProductStock);
+            return await context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">
+        ///
+        /// </typeparam>
+        /// <param name="oldObjects">
+        ///
+        /// </param>
+        /// <param name="newObjects">
+        ///
+        /// </param>
+        /// <returns></returns>
+        private static List<T> CheckListLengthDbObjects<T>(List<T> oldObjects, List<T> newObjects)
+        {
+            if (newObjects.Count < oldObjects.Count)
+                oldObjects.RemoveRange(newObjects.Count, (oldObjects.Count - newObjects.Count));
+            else if (newObjects.Count > oldObjects.Count)
+            {
+                newObjects.RemoveRange(0, oldObjects.Count);
+                oldObjects.AddRange(newObjects);
+            }
+
+            return oldObjects;
+        }
+
+        /// <summary>
+        /// AsyncDbFullProductStockMachineProductLinkerWrapper exists to asynchronously transform a list of Task DbInitializer._ProductStocks into a Task&lt;List&lt;ProductStock&gt;&gt;.
+        /// <para>The primary purpose of this function is to be used in the TwonkUpdate function so that it can asynchronously update the required fields in ProductStock.</para>
+        /// </summary>
+        /// <param name="newList_ProductStock">
+        /// A list of asynchronously created _ProductStock to be used to update fields in the ProductStock table in the LocationContext Database.
+        /// </param>
+        /// <param name="context">
+        /// Context of the Location context.
+        /// </param>
+        /// <returns>
+        /// A complete list of ProductStock recommended to be used to update the LocationContext Database.
+        /// </returns>
+        private static async Task<List<ProductStock>> AsyncDbFullProductStockMachineProductLinkerWrapper(List<Task<DbInitializer._ProductStock>> newList_ProductStock, LocationContext context)
+        {
+            var _context = context;
+
+            // Get all the new ProductStock from the API in the correct formatting.
+            var newProductStocks = await AsyncDbProductStockMachineProductLinker(newList_ProductStock, _context);
+
+            // Here the Machines get linked to the oldProductStocks to be used later in the function.
+            var oldProductStocks = context.ProductStocks.ToList();
+            oldProductStocks = CheckListLengthDbObjects(oldProductStocks, newProductStocks);
+
+            foreach (var oldProductStock in oldProductStocks)
+            {
+                oldProductStock.Machine = context.Machines.ToList().Find(cm => cm.ID.Equals(oldProductStock.MachineId));
+            }
+
+            // Update the complete list of ProductStock with the ones from the updated in newProductStock.
+            // Doing so requires finding the index of the oldProductStocks that needs to be update and using that index to update the amount.
+            for (var i = 0; i < newProductStocks.Count; i++)
+            {
+                oldProductStocks[i].ProductId = newProductStocks[i].ProductId;
+                oldProductStocks[i].MachineId = newProductStocks[i].MachineId;
+                oldProductStocks[i].AvailableCount = newProductStocks[i].AvailableCount;
+                oldProductStocks[i].MinCount = newProductStocks[i].MinCount;
+                oldProductStocks[i].MaxCount = newProductStocks[i].MaxCount;
+                oldProductStocks[i].RefillAdviceCount = newProductStocks[i].RefillAdviceCount;
+            }
+
+            // Return the updated list.
+            return oldProductStocks;
+        }
 
         /// <summary>
         /// AsyncDbProductStockMachineProductLinkerWrapper exists to asynchronously transform a list of Task DbInitializer._ProductStocks into a Task&lt;List&lt;ProductStock&gt;&gt;.

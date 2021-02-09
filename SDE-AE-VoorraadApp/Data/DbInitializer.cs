@@ -59,10 +59,7 @@ namespace SDE_AE_VoorraadApp.Data
                 JsonSerializer.Deserialize<_ProductStock>(ApiRequester("machines/stock", $"{machineId}").Content) ??
                 throw new InvalidOperationException()).ToList();
             var productStocks = DbProductStockMachineProductLinker(_productStocks, context);
-            /*if (context.ProductStocks.Any())
-                context.ProductStocks.UpdateRange(productStocks);
-            else*/
-                context.ProductStocks.AddRange(productStocks);
+            context.ProductStocks.AddRange(productStocks);
             context.SaveChanges();
         }
 
@@ -75,7 +72,7 @@ namespace SDE_AE_VoorraadApp.Data
         /// <returns>
         /// A list of unique Locations.
         /// </returns>
-        private static List<Location> UniqueLocationsFilter(List<Location> locations)
+        public static List<Location> UniqueLocationsFilter(List<Location> locations)
         {
             // Make a copy of all the Machines so that that list can be edited safely.
             var _locations = locations;
@@ -111,7 +108,7 @@ namespace SDE_AE_VoorraadApp.Data
         /// <returns>
         /// A list of Machines ready to be seeded into the LocationContext Database.
         /// </returns>
-        private static List<Machine> DbMachineLocationLinker(List<_Machine> machines, List<Location> locations)
+        public static List<Machine> DbMachineLocationLinker(List<_Machine> machines, List<Location> locations)
         {
             // Create a list of Machines for machines to be cast into.
             // After this is loops over all the _Machine in machines and finds a location that is the same as the Machine Latitude and Longitude.
@@ -141,7 +138,7 @@ namespace SDE_AE_VoorraadApp.Data
         /// <returns>
         /// The updated list of Products with correct Product.CategoryIDs.
         /// </returns>
-        private static List<Product> DbProductCategoryLinker(List<Product> products, List<Category> categories)
+        public static List<Product> DbProductCategoryLinker(List<Product> products, List<Category> categories)
         {
             // Loop over products in order to update the CategoryID.
             foreach (var product in products.ToList())
@@ -220,7 +217,7 @@ namespace SDE_AE_VoorraadApp.Data
         /// _Machine is used in order to deserialize the different machines from the VendingWeb API.
         /// This is so that later on the LocationID can be changed in accordance with the LocationContext Database.
         /// </summary>
-        private class _Machine
+        public class _Machine
         {
             // Define that this value should be seen as the ID from the received JSON.
             [JsonPropertyName("Id")]
