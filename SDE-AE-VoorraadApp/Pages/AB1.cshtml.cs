@@ -1,4 +1,8 @@
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using SDE_AE_VoorraadApp.Data;
 
 namespace SDE_AE_VoorraadApp.Pages
 {
@@ -8,9 +12,20 @@ namespace SDE_AE_VoorraadApp.Pages
     /// </summary>
     public class AB1Model : PageModel
     {
-        public void OnGet()
-        {
+        private readonly LocationContext _context;
+        private readonly ILogger<AB1Model> _logger;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
+        public AB1Model(SignInManager<IdentityUser> signInManager, ILogger<AB1Model> logger, LocationContext context)
+        {
+            _context = context;
+            _signInManager = signInManager;
+            _logger = logger;
+        }
+
+        public async Task OnGet()
+        {
+            await DbUpdater.TwonkUpdate(_context);
         }
 
     }

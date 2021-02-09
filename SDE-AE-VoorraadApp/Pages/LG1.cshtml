@@ -40,21 +40,30 @@
             <label for="filialen" id="checkBoxTitel"><b>Filialen:</b></label><br>
             <div class="checkboxCenter">
                 <div class="checkAll">
-                    <input type="checkbox" name="LocationToPrint" value="0"> Alles<br><br>
+                    <input type="checkbox" name="LocationToPrint" value="0" onClick="toggle(this)"> Selecteer alle filialen<br><br>
                 </div>
+
+                <script type="text/javascript">
+                    function toggle(source) {
+                        checkboxes = document.getElementsByName('LocationToPrint');
+                        for (var i = 0, n = checkboxes.length; i < n; i++) {
+                            checkboxes[i].checked = source.checked;
+                        }
+                    }
+                </script>
 
                 <div class="checkOthers">
                     @foreach (var item in Model.Location)
                     {
                         <div class="fontSize">
-                            <input type="checkbox" name="LocationToPrint" value="@item.ID"> 
+                            <input type="checkbox" name="LocationToPrint" value="@item.ID">
                             @Html.DisplayFor(modelItem => item.Place) - @Html.DisplayFor(modelItem => item.City)
                         </div>
                     }
                 </div>
                 <br>
                 <input type="submit" class="generateList" asp-page-handler="LG1_1" value="Genereer lijst">
-            </div> 
+            </div>
         </form>
     </div>
 </body>

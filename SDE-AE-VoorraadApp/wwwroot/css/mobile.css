@@ -50,6 +50,17 @@
         height: 3.5%;
     }
 
+    .refresh {
+        position: absolute;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        left: 50%;
+        bottom: 4%;
+        width: auto;
+        height: 10%;
+    }
+
     /*---------------------------*/
     /* Home Page Buttons */
     /*---------------------------*/
@@ -360,7 +371,7 @@
         left: 50%;
     }
 
-    .printButtonMiddle {
+    .printButtonMiddleM {
         border: none;
         border-radius: 7px;
         background-color: #0c9544;
@@ -368,7 +379,76 @@
         font-weight: 700;
         width: 150px;
         height: 40px;
-        position: relative;
+        position: absolute;
+    }
+
+    #printButtonC {
+        display: none;
+    }
+
+    .printButtonMiddleC {
+        border: none;
+        border-radius: 7px;
+        background-color: #0c9544;
+        color: black;
+        font-weight: 700;
+        width: 150px;
+        height: 40px;
+        position: absolute;
+    }
+
+    /*---------------------------*/
+    /* Table */
+    /*---------------------------*/
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 1px;
+    }
+
+        td, th:nth-child(n+2) {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 1px;
+        }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    td {
+        width: 67%;
+        text-align: left;
+    }
+
+        td:nth-child(n+2) {
+            width: 11%;
+            text-align: center;
+        }
+
+    #rijRoute tr:nth-child(2) {
+        counter-reset: rowNumber;
+    }
+
+    #rijRoute tr {
+        counter-increment: rowNumber;
+    }
+
+        #rijRoute tr td:first-child::before {
+            content: counter(rowNumber);
+        }
+
+    .tableHeader {
+        font-size: 15px;
+        color: #0c9544;
+        font-weight: 700;
     }
 
     /*---------------------------*/
@@ -451,3 +531,56 @@
         left: 50%;
     }
 }
+
+@media print {
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 1px;
+    }
+
+    td, th:nth-child(n+2) {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 1px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    td {
+        width: 67%;
+        text-align: left;
+    }
+
+    td:nth-child(n+2) {
+        width: 11%;
+        text-align: center;
+    }
+
+    #rijRoute tr:nth-child(2) {
+        counter-reset: rowNumber;
+    }
+
+    #rijRoute tr {
+        counter-increment: rowNumber;
+    }
+
+    #rijRoute tr td:first-child::before {
+        content: counter(rowNumber);
+    }
+
+    .tableHeader {
+        font-size: 25px;
+        color: #0c9544;
+        font-weight: 700;
+    }
+}
+

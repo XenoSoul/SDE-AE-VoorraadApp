@@ -14,7 +14,6 @@ namespace SDE_AE_VoorraadApp.Models
 
         public Machine Machine { get; set; }
         public Product Product { get; set; }
-        public ICollection<Order> Orders { get; set; }
 
     }
 }

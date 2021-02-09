@@ -48,32 +48,43 @@
                 <div id="printList">
                     @foreach (var item in Model.OrderLocationJoin)
                     {
-                    <div>
-                        @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br>
-                        ---------------------------------------------------------------<br>
-                        Naam - Vuladvies - Voorraad - Max<br>
-                        @foreach (var order in item.Orders)
+                        <div class="tableHeader">@Html.DisplayFor(modelItem => item.Location.Place) <text>, </text> @Html.DisplayFor(modelItem => item.Location.City)</div>
+                        <table>
+                            <tr>
+                                <th>Naam</th>
+                                <th>Vuladvies</th>
+                                <th>Voorraad</th>
+                                <th>Max</th>
+                            </tr>
+                            @foreach (var order in item.Orders)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => order.ProductName)</td>
+                                    <td>@Html.DisplayFor(modelItem => order.SnapRefillAdviceCount)</td>
+                                    <td>@Html.DisplayFor(modelItem => order.SnapAvailableCount)</td>
+                                    <td>@Html.DisplayFor(modelItem => order.SnapMaxCount)</td>
+                                </tr>
+                            }
+                        </table>
+                        <br>
+                    }
+                    <div class="tableHeader">Rijroute</div>
+                    <table id="rijRoute">
+                        <tr>
+                            <th style="width: 10%; text-align: center">Prioriteit</th>
+                            <th style="width: 45%; text-align: left">Adres</th>
+                            <th style="width: 45%; text-align: left">Plaats</th>
+                        </tr>
+
+                        @foreach (var item in Model.LocationPriority)
                         {
-                            @Html.DisplayFor(modelItem => order.ProductStock.Product.Name)
-                            <text> - </text>
-                            @Html.DisplayFor(modelItem => order.Quantity)
-                            <text> - </text>
-                            @Html.DisplayFor(modelItem => order.ProductStock.AvailableCount)
-                            <text> - </text>
-                            @Html.DisplayFor(modelItem => order.ProductStock.MaxCount)<br>
+                            <tr>
+                                <td style="width: 10%; text-align: center"></td>
+                                <td style="width: 45%; text-align: left">@Html.DisplayFor(modelItem => item.Location.City)</td>
+                                <td style="width: 45%; text-align: left">@Html.DisplayFor(modelItem => item.Location.Place)</td>
+                            </tr>
                         }
-                        <br><br>
-                    </div>
-                    }
-                    <br>
-                    Rijroute:<br>
-                    ---------------------------------------------------------------<br>
-                    @foreach (var item in Model.LocationPriority)
-                    {
-                        <div>
-                            @Html.DisplayFor(modelItem => item.Location.Place) @Html.DisplayFor(modelItem => item.Location.City)<br>
-                        </div>
-                    }
+                    </table>
                 </div>
 
                 <script type="text/javascript">
@@ -84,7 +95,7 @@
                         var windowName = 'Print' + uniqueName.getTime();
                         var printWindow = window.open(windowUrl, windowName, 'left=0,top=0,width=0,height=0');
 
-                        printWindow.document.write(printContent.innerHTML);
+                        printWindow.document.write(printContent.innerHTML + '<link rel="stylesheet" type="text/css" href="css/desktop.css"/>');
                         printWindow.focus();
 
 
@@ -93,27 +104,27 @@
                         // Chrome & Edge need "printWindow" to print the right window instead of the entire page (makes sense). printWindow gets closed after printing
                         // Code below has to use "printWindow" (instead of "window")(otherwise the code cannot recognize the designated window to close) (common across all browsers)
 
-                        setTimeout(function() { printWindow.print(); }, 500);
+                        setTimeout(function () { printWindow.print('<link rel="stylesheet" type="text/css" href="css/desktop.css"/>'); }, 500);
 
-                        setTimeout(function() {
-                                printWindow.addEventListener("focus",
-                                    function(event) {
-                                        setTimeout(function() {
-                                                printWindow.addEventListener("focus",
-                                                    function(event) {
-                                                        setTimeout(function() { printWindow.close(); }, 500);
-                                                    },
-                                                    false);
+                        setTimeout(function () {
+                            printWindow.addEventListener("focus",
+                                function (event) {
+                                    setTimeout(function () {
+                                        printWindow.addEventListener("focus",
+                                            function (event) {
+                                                setTimeout(function () { printWindow.close(); }, 500);
                                             },
-                                            1000);
+                                            false);
                                     },
-                                    false);
-                            },
+                                        1000);
+                                },
+                                false);
+                        },
                             1000);
 
                         // Extra code to make it also function for Chrome & Edge
-                        setTimeout(function() { printWindow.focus(); }, 600);
-                        setTimeout(function() { printWindow.close(); }, 600);
+                        setTimeout(function () { printWindow.focus(); }, 600);
+                        setTimeout(function () { printWindow.close(); }, 600);
                     }
                 </script>
 
@@ -133,12 +144,26 @@
             </form>
         </div>
 
+        <script type="text/javascript">
+            function printPartOfPageMobile(elementId) {
+                var printContent = document.getElementById(elementId);
+                var windowUrl = 'about:blank';
+                var uniqueName = new Date();
+                var windowName = 'Print' + uniqueName.getTime();
+                var printWindow = window.open(windowUrl, windowName, 'left=0,top=0,width=0,height=0');
+
+                printWindow.document.write(printContent.innerHTML);
+                printWindow.focus();
+            }
+        </script>
+
         <div class="divCenter">
             <form method="POST" asp-page="LG1_1">
                 <input type="submit" asp-page-handler="Index" value="Lijst Opslaan" class="saveList">
             </form>
 
-            <input type="button" class="printButton" value="Print" onclick="copyStringToClipboard();printPartOfPage('printList');">
+            <input id="printButtonM" type="button" class="printButton" value="Print" onclick="printPartOfPageMobile('printList');">
+            <input id="printButtonC" type="button" class="printButton" value="Print" onclick="copyStringToClipboard();printPartOfPage('printList');">
         </div>
     </div>
 </body>

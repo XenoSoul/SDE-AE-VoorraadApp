@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SDE_AE_VoorraadApp.Data;
 
 namespace SDE_AE_VoorraadApp.Pages
 {
@@ -16,11 +17,14 @@ namespace SDE_AE_VoorraadApp.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly LocationContext _context;
 
-        public IndexModel(SignInManager<IdentityUser> signInManager, ILogger<IndexModel> logger)
+
+        public IndexModel(SignInManager<IdentityUser> signInManager, ILogger<IndexModel> logger, LocationContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         public void OnGet()
@@ -85,6 +89,12 @@ namespace SDE_AE_VoorraadApp.Pages
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             return LocalRedirect("~/Login");
+        }
+        
+        public async Task<IActionResult> OnPostTwonkReload()
+        {
+            await DbUpdater.TwonkUpdate(_context);
+            return LocalRedirect("~/Index");
         }
     }
 }

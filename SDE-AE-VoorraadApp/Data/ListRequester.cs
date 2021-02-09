@@ -48,7 +48,7 @@ namespace SDE_AE_VoorraadApp.Data
                 productStockList.AddRange(context.ProductStocks.ToList().FindAll(ps =>
                     ps.MachineId == machine.ID && ps.RefillAdviceCount -
                     (sa != null && context.Orders.ToList().Find(o => o.ProductStockID == ps.ID) != null
-                        ? context.Orders.ToList().Find(o => o.ProductStockID.Equals(ps.ID)).Quantity
+                        ? context.Orders.ToList().Find(o => o.ProductStockID.Equals(ps.ID)).SnapRefillAdviceCount
                         : 0) > 0));
             }
 
@@ -67,6 +67,8 @@ namespace SDE_AE_VoorraadApp.Data
             });
             await context.SaveChangesAsync();
 
+            var recentProducts = productStockList.Select(productStock => context.Products.ToList().Find(p => p.ID == productStock.ProductId)).ToList();
+
             // Being that a OrderList entry has just been added the ID of the latest OrderList gets saved into a variable to be used later.
             // This ID is ofcourse the one we just created.
             // Turning this into a List<Order> the proper values get assigned as well as a priority value.
@@ -75,7 +77,12 @@ namespace SDE_AE_VoorraadApp.Data
             var orderId = context.OrderLists.ToList().Last().ID;
             var orderList = productStockList.Select(productStock => new Order
             {
-                ProductStockID = productStock.ID, Quantity = productStock.RefillAdviceCount,
+                ProductStockID = productStock.ID,
+                ProductName = productStock.Product.Name,
+                SnapRefillAdviceCount = productStock.RefillAdviceCount,
+                SnapAvailableCount = productStock.AvailableCount,
+                SnapMaxCount = productStock.MaxCount,
+
                 Priority = Math.Abs((float)productStock.RefillAdviceCount / productStock.MaxCount * 100f - 100f) < 1
                     ? 1000f
                     : (float)productStock.RefillAdviceCount / productStock.MaxCount * 100f,
@@ -84,7 +91,7 @@ namespace SDE_AE_VoorraadApp.Data
 
             // The Orders get added to the Order table asynchronously and saved.
             // After which the total amount of rows affected gets returned.
-            await context.Orders.AddRangeAsync(orderList);
+            await context.Orders.AddRangeAsync(orderList.OrderByDescending(ol => ol.ProductName));
             return await context.SaveChangesAsync();
         }
 

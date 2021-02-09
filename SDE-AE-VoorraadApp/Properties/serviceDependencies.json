@@ -1,12 +1,12 @@
 {
   "dependencies": {
-    "mssql2": {
-      "type": "mssql",
-      "connectionId": "LocationContext"
-    },
     "mssql1": {
       "type": "mssql",
       "connectionId": "LoginContextConnection"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "LocationContext"
     }
   }
 }
