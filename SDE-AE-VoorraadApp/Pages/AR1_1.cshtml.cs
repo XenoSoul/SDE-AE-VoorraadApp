@@ -40,10 +40,10 @@ namespace SDE_AE_VoorraadApp.Pages
         /// <param name="action">
         /// The value passed by <see cref="AR1Model.OnPost"/>.
         /// </param>
-        public void OnGet(string action)
+        public void OnGet(string list)
         {
             // Parse the string value into an int.
-            var orderListId = int.Parse(action);
+            var orderListId = int.Parse(list);
             _logger.LogInformation($"{orderListId} was successfully created");
 
             // Use the orderListId in order to get the full list.

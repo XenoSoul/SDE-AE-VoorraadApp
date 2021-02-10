@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SDE_AE_VoorraadApp.Data;
+using SDE_AE_VoorraadApp.Models;
 
 namespace SDE_AE_VoorraadApp.Pages
 {
@@ -27,19 +29,33 @@ namespace SDE_AE_VoorraadApp.Pages
             _context = context;
             _signInManager = signInManager;
             _logger = logger;
+
         }
 
-        public List<ListRequester.DateTimeOrderList> OrderLocationJoin { get; private set; }
+        public List<OrderList> OrderLocationJoin { get; private set; }
+
+        [BindProperty]
+        public DateTime DateTimeRequested { get; set; }
 
         [BindProperty]
         public int OrderListIDAR1 { get; set; }
 
+        [BindProperty]
+        public string WarningMessage { get; set; }
+
         /// <summary>
         /// Gets all the <see cref="ListRequester.DateTimeOrderList"/> vales and cast them into <see cref="OrderLocationJoin"/>.
         /// </summary>
-        public void OnGet()
+        public void OnGet(string date)
         {
-            OrderLocationJoin = ListRequester.RequestDateOrderLists(_context);
+            DateTimeRequested = date == null ? DateTime.Now : DateTime.Parse(date);
+
+            var orderlist= ListRequester.RequestDateOrderLists(DateTimeRequested, _context);
+
+            if (orderlist.Count == 0)
+                WarningMessage = "Er zijn geen lijsten op deze dag aangemaakt";
+
+            OrderLocationJoin = orderlist;
         }
 
         /// <summary>
@@ -50,7 +66,12 @@ namespace SDE_AE_VoorraadApp.Pages
         /// </returns>
         public IActionResult OnPost()
         {
-            return RedirectToPage("AR1_1", new { Action = OrderListIDAR1 });
+            return RedirectToPage("AR1_1", new { List = OrderListIDAR1 });
+        }
+
+        public IActionResult OnPostDetermineDate()
+        {
+            return RedirectToPage("AR1", new { Date = DateTimeRequested });
         }
 
         /// <summary>

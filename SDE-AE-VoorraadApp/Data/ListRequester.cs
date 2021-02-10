@@ -113,38 +113,29 @@ namespace SDE_AE_VoorraadApp.Data
         /// <summary>
         /// RequestDateOrderLists orders all the OrderLists in a DateTimeOrderList List of the last 365 days.
         /// </summary>
+        /// <param name="date">
+        ///
+        /// </param>
         /// <param name="context">
         /// Context of the LocationContext Database.
         /// </param>
         /// <returns>
         /// A List of <see cref="DateTimeOrderList"/>.
         /// </returns>
-        public static List<DateTimeOrderList> RequestDateOrderLists(LocationContext context)
+        public static List<OrderList> RequestDateOrderLists(DateTime date, LocationContext context)
         {
             // In order to get the last 365 days of OrderLists there first a list gets created that the OrderLists will be cast into.
             // This list then gets looped over using a for loop 365 (being equal to a year).
             // The current DateTime gets saved minus the amount of days equal to the loop counter.
             // It then finds all the OrderLists associated with that day.
             // Every time a particular day has 0 OrderLists it skips adding it to the list and goes to the next day.
-            var datetimeOrderLists = new List<DateTimeOrderList>();
-            for (var i = 0; i < 365; i++)
-            {
-                var loopDateTime = DateTime.Now.Subtract(new TimeSpan(i, 0, 0, 0));
-                var dateOrderLists = context.OrderLists.ToList().FindAll(ol =>
-                    ol.DateTimeCreated.Date == loopDateTime.Date)
-                    .OrderByDescending(ol => ol.DateTimeCreated).ToList();
-                if (dateOrderLists.Count == 0)
-                    continue;
 
-                datetimeOrderLists.Add(new DateTimeOrderList
-                {
-                    Day = loopDateTime,
-                    OrderLists = dateOrderLists
-                });
-            }
+            var dateOrderLists = context.OrderLists.ToList().FindAll(ol =>
+                    ol.DateTimeCreated.Date == date.Date)
+                .OrderByDescending(ol => ol.DateTimeCreated).ToList();
 
             // Returns all the Orderlists of the last year in a List<DateTimeOrderList>.
-            return datetimeOrderLists;
+            return dateOrderLists;
         }
 
         /// <summary>

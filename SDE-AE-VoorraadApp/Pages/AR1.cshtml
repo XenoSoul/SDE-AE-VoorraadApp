@@ -37,7 +37,10 @@
 
     <div>
         <div class="dateSelector">
-            <input type="date" onchange="retrieveDate()" id="dateInput">
+            <form asp-page-handler="DetermineDate" method="POST">
+                <input type="date" name="DateTimeRequested" asp-for="DateTimeRequested">
+                <button type="submit"></button>
+            </form>
         </div>
 
         <script type="text/javascript">
@@ -52,21 +55,19 @@
 
         <div class="listBorder">
             <div>
-                @foreach (var item in Model.OrderLocationJoin)
-                {
-                    <div class="archiveDateTitle">
-                        @Html.DisplayFor(modelItem => item.Day.Date)<br>--------------------------------------------<br>
-                        @foreach (var orderList in item.OrderLists)
-                        {
-                            <div>
-                                <form asp-page="AR1" method="POST">
-                                    <button asp-for class="invisButton" name="orderListIDAR1" value="@Html.DisplayFor(modelItem => orderList.ID)">@Html.DisplayFor(modelItem => orderList.Name)</button><br>
-                                </form>
-                            </div>
-                        }
-                        <br><br>
-                    </div>
-                }
+                <div class="archiveDateTitle">
+                    @Html.DisplayFor(modelItem => modelItem.WarningMessage)
+                    @foreach (var orderList in Model.OrderLocationJoin)
+                    {
+                        <div>
+                            <form asp-page="AR1" method="POST">
+                                <button asp-for class="invisButton" name="orderListIDAR1" value="@Html.DisplayFor(modelItem => orderList.ID)">@Html.DisplayFor(modelItem => orderList.Name)</button><br>
+                            </form>
+                        </div>
+                    }
+                    <br><br>
+                </div>
+
             </div>
         </div>
     </div>
